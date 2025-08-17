@@ -1,10 +1,18 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./Pages/Login";
 
-export default function App() {
+
+function App() {
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      <h1>Hello PWA 👋</h1>
-      <p>This works offline and can be installed on your device.</p>
-    </div>
-  )
+    <BrowserRouter>
+  
+      <Routes>
+        <Route path="/" element={<Login />} />
+       
+      </Routes>
+   
+    </BrowserRouter>
+  );
 }
+
+export default App;

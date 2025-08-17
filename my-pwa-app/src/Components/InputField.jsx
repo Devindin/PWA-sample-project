@@ -1,0 +1,130 @@
+import { useState } from "react";
+import { Field } from "formik";
+import Select from "react-select";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { MdLockOutline } from "react-icons/md";
+
+function InputField({
+  label,
+  name,
+  type,
+  placeholder,
+  handleChange,
+  requiredfiled,
+  disabled = false,
+  options = [],
+  values = {},
+  errors = {},
+  touched = {},
+  showLockIcon = false,
+}) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isDropdown = type === "select";
+  const isPasswordField = type === "password";
+
+  const hasError = errors[name] && touched[name]; // check for error
+
+  return (
+    <div className="w-full flex flex-col space-y-1 mt-[8px]">
+      {/* Label */}
+      <div className="flex justify-between items-center">
+        <label
+          htmlFor={name}
+          className="text-input_label text-[11px] md:text-[15px] 3xl:text-[28px]"
+        >
+          {label}{" "}
+          {requiredfiled && <span className="text-star_mark_color">*</span>}
+        </label>
+      </div>
+
+      {/* Input / Select wrapper */}
+      <div
+        className={`relative border rounded-md transition-colors flex items-center ${
+          disabled
+            ? "border-input_field_border text-input_field_placeholder cursor-not-allowed"
+            : hasError
+            ? "border-red-500"
+            : "border-input_field_border"
+        }`}
+      >
+        {isDropdown ? (
+          <Select
+            name={name}
+            options={options}
+            isDisabled={disabled}
+            value={options.find((opt) => opt.value === values[name]) || null}
+            onChange={(selected) =>
+              handleChange({ target: { name, value: selected?.value || "" } })
+            }
+            placeholder={placeholder || "Select"}
+            classNames={{
+              control: () => "h-[52px] text-[14px] 3xl:text-[30px]",
+            }}
+            styles={{
+              menu: (provided) => ({
+                ...provided,
+                maxHeight: "unset",
+                overflowY: "unset",
+              }),
+              menuList: (provided) => ({
+                ...provided,
+                maxHeight: 150,
+                overflowY: "auto",
+              }),
+              control: (provided) => ({
+                ...provided,
+                border: "none",
+                boxShadow: "none",
+                backgroundColor: "transparent",
+              }),
+            }}
+          />
+        ) : (
+          <>
+            {showLockIcon && (
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <MdLockOutline size={16} />
+              </span>
+            )}
+
+            <Field
+              type={
+                isPasswordField ? (showPassword ? "text" : "password") : type
+              }
+              name={name}
+              placeholder={placeholder}
+              onChange={handleChange}
+              disabled={disabled}
+              className={`w-full h-[43px] 3xl:h-[52px] p-2 ${
+                showLockIcon ? "pl-10" : ""
+              } bg-transparent outline-none 3xl:text-[30px] md:text-[16px] text-[14px]`}
+              as={type === "textarea" ? "textarea" : "input"}
+              rows={type === "textarea" ? 4 : undefined}
+            />
+
+            {isPasswordField && !disabled && (
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600 text-[16px]"
+              >
+                {showPassword ? (
+                  <IoMdEye size={20} />
+                ) : (
+                  <IoMdEyeOff size={20} />
+                )}
+              </span>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Error Message */}
+      {hasError && (
+        <div className="text-red-500 text-[12px] mt-1">{errors[name]}</div>
+      )}
+    </div>
+  );
+}
+
+export default InputField;
