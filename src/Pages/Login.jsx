@@ -38,7 +38,7 @@ function Login() {
             initialValues={{ email: "", password: "", role: "admin" }}
             onSubmit={(values) => {
               console.log("Form submitted:", values);
-              navigate("/admin_dashboard");
+              navigate("/dashboard");
             }}
           >
             {({ handleChange, values, errors, touched }) => (
@@ -69,27 +69,6 @@ function Login() {
                   errors={errors}
                   touched={touched}
                 />
-
-                <div className="flex items-center gap-16 justify-center mt-[12px] mb-[15px]">
-                  <label className="flex items-center gap-2 sm:text-[16px] text-[14px]  3xl:text-[25px] font-roboto">
-                    <Field
-                      type="radio"
-                      name="role"
-                      value="admin"
-                      className="w-4 h-4 accent-radio_button_accent text-primary border-gray-300 focus:ring-2 focus:ring-primary"
-                    />
-                    Admin
-                  </label>
-                  <label className="flex items-center gap-2  3xl:text-[25px] sm:text-[16px] text-[14px] font-roboto">
-                    <Field
-                      type="radio"
-                      name="role"
-                      value="employee"
-                      className="w-4 h-4 accent-radio_button_accent text-primary border-gray-300 focus:ring-2 focus:ring-primary"
-                    />
-                    Employee
-                  </label>
-                </div>
 
                 <Link
                   to="/login-with-email-verification"
