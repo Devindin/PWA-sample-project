@@ -13,7 +13,7 @@ export default {
         roboto: ["Roboto", "sans-serif"],
       },
       colors: {
-        primary_text_heading: "#0C1421", 
+        primary_text_heading: "#790E6F", 
         secondary_text_heading: "#565F6C" ,
         Secondary_page_heading:"#473F47",
         link_text: "#1E4AE9",
@@ -22,8 +22,10 @@ export default {
         input_field_border: "#6E6E714D",
         input_field_placeholder: "#8897AD",
         input_label: "#0C1421",
-
-        primary_button_bg: "#006CBD",
+        bg_color : "#F4E7F3",
+        c3:"#D07CC6",
+        c4:"#BC84BC",
+        primary_button_bg: "#790E6F",
         cancel_button_border: "#6E6E71",
         model_heading_text_color : "#35353A",
         model_secondary_text_color : "#5E5E5E",
@@ -47,7 +49,7 @@ export default {
         employee_page_card_border: "#A5C7FF80",
 
         search_bar_border:"#006CBD",
-        table_header_bg:"#006CBD",
+        table_header_bg:"#790E6F",
         search_bar_text:"#6E6E71",
 
         mobile_table_border:"#D9D9D9",

@@ -5,6 +5,7 @@ import InputField from "../Components/InputField";
 import { Formik, Form, Field } from "formik";
 import PrimaryButton from "../Components/PrimaryButton";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 
 function Login() {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ function Login() {
           </Formik>
         </div>
         <div className="flex justify-center mt-auto">
-   
+   <Footer/>
         </div>
       </div>
     </div>

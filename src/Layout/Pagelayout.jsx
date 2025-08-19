@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom"; // use react-router for navigation
 import {
   FaHome,
-  FaUsers,
   FaCog,
   FaBoxOpen,
   FaShoppingCart,
@@ -10,6 +9,7 @@ import {
   FaUserFriends,
   FaSignOutAlt,
 } from "react-icons/fa";
+import Profile from "../assets/profile.png";
 
 function PageLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -18,7 +18,6 @@ function PageLayout({ children }) {
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUserFriends />, label: "Customers", path: "/customers" },
     { icon: <FaShoppingCart />, label: "Orders", path: "/orders" },
-    { icon: <FaUsers />, label: "Users", path: "/users" },
     { icon: <FaBoxOpen />, label: "Products", path: "/products" },
     { icon: <FaTruck />, label: "Delivery", path: "/delivery" },
     { icon: <FaCog />, label: "Settings", path: "/settings" },
@@ -26,21 +25,26 @@ function PageLayout({ children }) {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 ">
       {/* Sidebar */}
       <div
-        className={`flex flex-col bg-gray-800 text-white transition-all duration-300 
+        className={`flex flex-col bg-bg_color text-black transition-all duration-300 rounded-[32px] m-4
         ${collapsed ? "w-16" : "w-56"}`}
       >
-        {/* Logo / Toggle Button */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          {!collapsed && <span className="text-lg font-bold">MyApp</span>}
-          <button
+        <div className="justify-end">
+           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-2 rounded hover:bg-gray-700"
+            className="p-2 rounded "
           >
             {collapsed ? "➡️" : "⬅️"}
           </button>
+        </div>
+        {/* Logo / Toggle Button */}
+        <div className="flex items-center justify-center flex-col  ">
+          
+           <img src={Profile} className="w-[50px] rounded-full" />
+          {!collapsed && <h1>Devindi Karunathilaka</h1>}
+         
         </div>
 
         {/* Menu */}
@@ -49,13 +53,16 @@ function PageLayout({ children }) {
             <Link
               key={index}
               to={item.path}
-              className="flex items-center gap-4 p-4 rounded cursor-pointer hover:bg-gray-700"
+              className="flex items-center gap-4 p-4 rounded-[12px] cursor-pointer hover:bg-c4 font-semibold"
             >
               <span className="text-lg">{item.icon}</span>
               {!collapsed && <span>{item.label}</span>}
             </Link>
           ))}
         </nav>
+        {/* <div className="w-fulll bg-primary_button_bg m-4">
+          <h1>Hi</h1>
+        </div> */}
       </div>
 
       {/* Main Content */}

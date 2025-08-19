@@ -1,10 +1,11 @@
 import React from 'react'
+import PageLayout from '../Layout/Pagelayout'
 
 function Delivery() {
   return (
-    <div>
+    <PageLayout>
       
-    </div>
+    </PageLayout>
   )
 }
 
