@@ -63,7 +63,7 @@ function Dashboard() {
 
   return (
     <PageLayout>
-      <div className="w-full h-screen flex flex-col gap-3 p-2  dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="w-full h-full flex flex-col gap-3 p-2  dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         {/* Top Stats Row */}
         <div className="flex flex-row gap-3 flex-none h-[15%]">
           {/* Total Users */}
