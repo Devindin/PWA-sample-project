@@ -1,4 +1,4 @@
-import Image from "../assets/LoginImage.jpg";
+import Image from "../assets/LoginImage3.jpg";
 import LoginHeadings from "../Components/LoginHeadings";
 import LoginSecondaryHeadding from "../Components/LoginSecondaryHeadding";
 import InputField from "../Components/InputField";
@@ -6,18 +6,19 @@ import { Formik, Form } from "formik";
 import PrimaryButton from "../Components/PrimaryButton";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
-import { motion } from "framer-motion"; // 👈 Import Framer Motion
+import { motion } from "framer-motion";
+import Logo from "../assets/Logo.png"
 
 function Login() {
   const navigate = useNavigate();
 
-  // Motion variants for staggered animations
+  // Motion variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
     },
   };
 
@@ -27,123 +28,121 @@ function Login() {
   };
 
   return (
-    <motion.div
-      className="grid lg:grid-cols-2 p-8 sm:p-10 lg:p-12"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      {/* Left Image */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700">
       <motion.div
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="grid lg:grid-cols-2 w-full max-w-6xl rounded-[32px] shadow-2xl overflow-hidden bg-white/40 dark:bg-gray-800/60 backdrop-blur-lg"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
       >
-        <div className="relative w-full lg:min-h-[85vh] sm:h-[267px] h-[144px] min-[200px]:max-[320px]:h-[180px] min-[321px]:max-[376px]:h-[160px]">
-          <img
-            src={Image}
-            alt="Login"
-            className="w-full h-full object-cover rounded-[24px]"
-          />
-        </div>
-      </motion.div>
-
-      {/* Right Form */}
-      <motion.div
-        className="flex flex-col justify-between"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+        {/* Left Image */}
         <motion.div
-          className="flex flex-col justify-center items-center flex-grow"
-          variants={itemVariants}
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="hidden lg:block relative"
         >
-          <Formik
-            initialValues={{ email: "", password: "", role: "admin" }}
-            onSubmit={(values) => {
-              console.log("Form submitted:", values);
-              navigate("/dashboard");
-            }}
+          <div className="hidden lg:block relative h-auto lg:h-[calc(100vh-4rem)] rounded-l-[32px] overflow-hidden">
+            <img
+              src={Image}
+              alt="Login"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </motion.div>
+
+        {/* Right Form */}
+        <motion.div
+          className="flex flex-col justify-between p-8 sm:p-10 lg:p-12"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div
+            className="flex flex-col justify-center items-center flex-grow"
+            variants={itemVariants}
           >
-            {({ handleChange, values, errors, touched }) => (
-              <Form className="flex flex-col pt-[15px] w-4/5">
-                {/* Headings */}
-                <motion.div variants={itemVariants}>
-                  <LoginHeadings content="Welcome Back" />
-                </motion.div>
-                <motion.div variants={itemVariants}>
-                  <LoginSecondaryHeadding content="It's a fresh start—sign in to take control of your day" />
-                </motion.div>
+            <Formik
+              initialValues={{ email: "", password: "" }}
+              onSubmit={(values) => {
+                console.log("Form submitted:", values);
+                navigate("/dashboard");
+              }}
+            >
+              {({ handleChange, values, errors, touched }) => (
+                <Form className="flex flex-col w-full max-w-md space-y-4">
+                  <motion.div variants={itemVariants}>
+                    <LoginHeadings content="Welcome Back" />
+                  </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <LoginSecondaryHeadding content="Sign in to your account" />
+                  </motion.div>
 
-                {/* Inputs */}
-                <motion.div variants={itemVariants}>
-                  <InputField
-                    label="Email"
-                    name="email"
-                    type="email"
-                    placeholder="Example@email.com"
-                    handleChange={handleChange}
-                    values={values}
-                    errors={errors}
-                    touched={touched}
-                  />
-                </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <InputField
+                      label="Email"
+                      name="email"
+                      type="email"
+                      placeholder="example@email.com"
+                      handleChange={handleChange}
+                      values={values}
+                      errors={errors}
+                      touched={touched}
+                    />
+                  </motion.div>
 
-                <motion.div variants={itemVariants}>
-                  <InputField
-                    label="Password"
-                    name="password"
-                    type="password"
-                    placeholder="••••••••"
-                    handleChange={handleChange}
-                    values={values}
-                    errors={errors}
-                    touched={touched}
-                  />
-                </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <InputField
+                      label="Password"
+                      name="password"
+                      type="password"
+                      placeholder="••••••••"
+                      handleChange={handleChange}
+                      values={values}
+                      errors={errors}
+                      touched={touched}
+                    />
+                  </motion.div>
 
-                {/* Forgot password */}
-                <motion.div variants={itemVariants}>
-                  <Link
-                    to="/login-with-email-verification"
-                    className="text-link_text text-[14px] sm:text-[16px] 3xl:text-[22px] text-right font-roboto mb-2"
+                  <motion.div variants={itemVariants} className="text-right">
+                    <Link
+                      to="/login-with-email-verification"
+                      className="text-purple-700 dark:text-purple-400 text-sm font-medium hover:underline"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </motion.div>
+
+                  <motion.div variants={itemVariants}>
+                    <PrimaryButton label="Sign In" type="submit" />
+                  </motion.div>
+
+                  <motion.div
+                    variants={itemVariants}
+                    className="flex justify-center text-sm font-medium"
                   >
-                    Forgot Password?
-                  </Link>
-                </motion.div>
+                    <span>Don’t have an account? </span>
+                    <Link
+                      to="/register"
+                      className="text-purple-700 dark:text-purple-400 ml-1 hover:underline"
+                    >
+                      Register
+                    </Link>
+                  </motion.div>
+                </Form>
+              )}
+            </Formik>
+          </motion.div>
 
-                {/* Button */}
-                <motion.div variants={itemVariants}>
-                  <PrimaryButton label="Sign In" type="submit" />
-                </motion.div>
-
-                {/* Register Link */}
-                <motion.div
-                  variants={itemVariants}
-                  className="flex items-center justify-center mt-[10px] sm:mt-[15px] lg:mt-[8px] pb-[8px] sm:pb-[16px] lg:pb-[20px] font-inter text-[13px] sm:text-[17px] 3xl:text-[22px]"
-                >
-                  <h1>
-                    Don’t have an account?{" "}
-                    <span className="text-link_text cursor-pointer">
-                      <Link to="/register">Register</Link>
-                    </span>
-                  </h1>
-                </motion.div>
-              </Form>
-            )}
-          </Formik>
-        </motion.div>
-
-        {/* Footer */}
-        <motion.div
-          className="flex justify-center mt-auto"
-          variants={itemVariants}
-        >
-          <Footer />
+          <motion.div
+            className="flex justify-center mt-6"
+            variants={itemVariants}
+          >
+            <Footer />
+          </motion.div>
         </motion.div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 
