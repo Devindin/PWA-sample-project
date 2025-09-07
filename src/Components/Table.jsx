@@ -115,7 +115,7 @@ function Table({
                 data.map((row, i) => (
                   <tr
                     key={i}
-                    className="border-b border-[#D9D5EC] hover:bg-gray-50 text-[10px] md:text-[14px] font-inter text-[#5E5E5E]"
+                    className="border-b border-[#D9D5EC] hover:bg-gray-50  text-[10px] md:text-[14px] font-inter text-[#5E5E5E] dark:text-white"
                   >
                     {/* Row checkbox */}
                     <td className="px-2 py-2">

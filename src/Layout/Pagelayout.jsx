@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // use react-router for navigation
+import { Link } from "react-router-dom";
 import {
   FaHome,
   FaCog,
@@ -9,10 +9,18 @@ import {
   FaUserFriends,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { BsMoonStars, BsSun } from "react-icons/bs"; // icons for toggle
 import Profile from "../assets/profile.png";
 
 function PageLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark"); // apply dark class
+  };
 
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
@@ -25,50 +33,82 @@ function PageLayout({ children }) {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100 ">
+    <div
+      className={`flex h-screen transition-colors duration-500
+        ${darkMode ? "bg-gray-900" : "bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50"}
+      `}
+    >
       {/* Sidebar */}
       <div
-        className={`flex flex-col bg-bg_color text-black transition-all duration-300 rounded-[32px] m-4
-        ${collapsed ? "w-16" : "w-56"}`}
+        className={`flex flex-col 
+          ${darkMode ? "bg-gray-800/60 border-gray-700 text-gray-100" : "bg-white/30 border-white/40 text-black"}
+          backdrop-blur-lg shadow-lg border
+          transition-all duration-300 rounded-[32px] m-4
+          ${collapsed ? "w-16" : "w-60"}`}
       >
-        <div className="justify-end">
-           <button
+        {/* Collapse + Dark Mode Buttons */}
+        <div className="flex justify-between items-center p-2">
+          {/* Collapse */}
+          <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-2 rounded "
+            className="p-2 rounded-lg bg-purple-200/50 hover:bg-purple-300/50 dark:bg-gray-700 dark:hover:bg-gray-600 transition"
           >
-            {collapsed ? "➡️" : "⬅️"}
+            {collapsed ? (
+              <FiChevronRight className="text-purple-900 dark:text-gray-200 text-xl" />
+            ) : (
+              <FiChevronLeft className="text-purple-900 dark:text-gray-200 text-xl" />
+            )}
+          </button>
+
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={toggleDarkMode}
+            className="p-2 rounded-lg bg-purple-200/50 hover:bg-purple-300/50 dark:bg-gray-700 dark:hover:bg-gray-600 transition"
+          >
+            {darkMode ? (
+              <BsSun className="text-yellow-400 text-lg" />
+            ) : (
+              <BsMoonStars className="text-purple-900 text-lg" />
+            )}
           </button>
         </div>
-        {/* Logo / Toggle Button */}
-        <div className="flex items-center justify-center flex-col  ">
-          
-           <img src={Profile} className="w-[50px] rounded-full" />
-          {!collapsed && <h1>Devindi Karunathilaka</h1>}
-         
+
+        {/* Profile */}
+        <div className="flex items-center justify-center flex-col p-4">
+          <img
+            src={Profile}
+            className="w-[50px] rounded-full border-2 border-purple-400"
+          />
+          {!collapsed && (
+            <h1 className="mt-2 text-sm font-semibold text-purple-900 dark:text-gray-200">
+              Devindi Karunathilaka
+            </h1>
+          )}
         </div>
 
         {/* Menu */}
-        <nav className="flex-1 p-2  ">
+        <nav className="flex-1 p-2 space-y-2">
           {menuItems.map((item, index) => (
             <Link
               key={index}
               to={item.path}
-              className="flex items-center gap-4 p-4 rounded-[12px] cursor-pointer hover:bg-c4 font-semibold"
+              className={`flex items-center gap-4 p-3 rounded-[12px] cursor-pointer font-medium transition
+                ${darkMode 
+                  ? "bg-gray-700/30 hover:bg-gray-600 text-gray-200" 
+                  : "bg-white/20 hover:bg-purple-200/40 text-purple-900"
+                }`}
             >
               <span className="text-lg">{item.icon}</span>
               {!collapsed && <span>{item.label}</span>}
             </Link>
           ))}
         </nav>
-        {/* <div className="w-fulll bg-primary_button_bg m-4">
-          <h1>Hi</h1>
-        </div> */}
       </div>
 
       {/* Main Content */}
       <div className="flex-1 p-6 overflow-auto">
         {children || (
-          <h1 className="text-2xl font-semibold text-gray-700">
+          <h1 className="text-2xl font-semibold text-purple-800 dark:text-gray-200">
             Welcome to Dashboard
           </h1>
         )}

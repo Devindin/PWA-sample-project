@@ -2,6 +2,7 @@ import CssSyntaxError_ from 'postcss/lib/css-syntax-error';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
