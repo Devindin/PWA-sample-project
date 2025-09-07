@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard";
 import Orders from "./Pages/Orders";
 import Products from "./Pages/Products";
 import Delivery from "./Pages/Delivery";
+import Settings from "./Pages/Settings"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/products" element={<Products />} />
         <Route path="/delivery" element={<Delivery />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );

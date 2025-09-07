@@ -1,12 +1,370 @@
-import React from 'react'
-import PageLayout from '../Layout/Pagelayout'
+import React, { useState } from "react";
+import PageLayout from "../Layout/PageLayout";
+import EntityList from "../Components/EntityList";
+import EntityDetails from "../Components/EntityDetails";
+
+const initialOrders = [
+  {
+    id: "O001",
+    customerName: "John Doe",
+    customerAddress: "123 Main St, City",
+    deliveryAddress: "456 Delivery Rd, City",
+    placedDate: "2025-09-05",
+    deliveryDate: "2025-09-10",
+    status: "Pending",
+    deliveryPrice: 200,
+    total: 3500,
+    remarks: "Handle with care",
+    items: [
+      {
+        code: "I001",
+        name: "Item A",
+        image: "",
+        price: 1500,
+        quantity: 2,
+      },
+      {
+        code: "I002",
+        name: "Item B",
+        image: "",
+        price: 500,
+        quantity: 1,
+      },
+    ],
+  },
+  {
+    id: "O002",
+    customerName: "Jane Smith",
+    customerAddress: "789 Elm St, City",
+    deliveryAddress: "321 Delivery Ave, City",
+    placedDate: "2025-09-06",
+    deliveryDate: "2025-09-12",
+    status: "Processing",
+    deliveryPrice: 100,
+    total: 1200,
+    remarks: "",
+    items: [
+      {
+        code: "I003",
+        name: "Item C",
+        image: "",
+        price: 1200,
+        quantity: 1,
+      },
+    ],
+  },
+];
 
 function Orders() {
+  const [orders, setOrders] = useState(initialOrders);
+  const [search, setSearch] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [formValues, setFormValues] = useState({});
+  const [placedDateFilter, setPlacedDateFilter] = useState("");
+  const [deliveryDateFilter, setDeliveryDateFilter] = useState("");
+
+  // Filter
+  const filteredOrders = orders.filter((o) => {
+    const matchesSearch =
+      (o.customerName?.toLowerCase() || "").includes(search.toLowerCase()) ||
+      o.id.toLowerCase().includes(search.toLowerCase());
+
+    const matchesPlacedDate =
+      !placedDateFilter || o.placedDate === placedDateFilter;
+    const matchesDeliveryDate =
+      !deliveryDateFilter || o.deliveryDate === deliveryDateFilter;
+
+    return matchesSearch && matchesPlacedDate && matchesDeliveryDate;
+  });
+
+  // Select
+  const handleSelect = (order) => {
+    setSelectedOrder(order);
+    setFormValues(order);
+  };
+
+  // Input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  // Item change
+  const handleItemChange = (idx, field, value) => {
+    const items = [...(formValues.items || [])];
+    items[idx][field] = value;
+    setFormValues({ ...formValues, items });
+  };
+
+  // Add item
+  const handleAddItem = () => {
+    const items = [...(formValues.items || [])];
+    items.push({
+      code: "",
+      name: "",
+      image: "",
+      price: 0,
+      quantity: 1,
+    });
+    setFormValues({ ...formValues, items });
+  };
+
+  // Remove item
+  const handleRemoveItem = (idx) => {
+    const items = [...(formValues.items || [])];
+    items.splice(idx, 1);
+    setFormValues({ ...formValues, items });
+  };
+
+  // Calculate total
+  const calculateTotal = () => {
+    const itemsTotal = (formValues.items || []).reduce(
+      (sum, item) => sum + (Number(item.price) * Number(item.quantity)),
+      0
+    );
+    return itemsTotal + Number(formValues.deliveryPrice || 0);
+  };
+
+  // Add
+  const handleAdd = () => {
+    const newOrder = {
+      id: `O${(orders.length + 1).toString().padStart(3, "0")}`,
+      customerName: "",
+      customerAddress: "",
+      deliveryAddress: "",
+      placedDate: new Date().toISOString().split("T")[0],
+      deliveryDate: "",
+      status: "Pending",
+      deliveryPrice: 0,
+      total: 0,
+      remarks: "",
+      items: [],
+    };
+    setOrders([newOrder, ...orders]);
+    handleSelect(newOrder);
+  };
+
+  // Save
+  const handleSave = () => {
+    const updatedOrder = { ...formValues, total: calculateTotal() };
+    setOrders(orders.map((o) => (o.id === updatedOrder.id ? updatedOrder : o)));
+    alert("Order updated!");
+  };
+
+  // Delete
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      setOrders(orders.filter((o) => o.id !== id));
+      if (selectedOrder?.id === id) setSelectedOrder(null);
+    }
+  };
+
   return (
- <PageLayout>
-  
- </PageLayout>
-  )
+    <PageLayout>
+      <div className="flex gap-4 p-4 h-full">
+        {/* EntityList for Orders */}
+        <EntityList
+          entities={filteredOrders}
+          search={search}
+          setSearch={setSearch}
+          onAdd={handleAdd}
+          onSelect={handleSelect}
+          onDelete={handleDelete}
+          extraFilter={
+            <div className="flex flex-col gap-2 mb-2">
+              <label className="text-gray-700 dark:text-gray-300 text-sm">
+                Placed Date:
+              </label>
+              <input
+                type="date"
+                value={placedDateFilter}
+                onChange={(e) => setPlacedDateFilter(e.target.value)}
+                className="p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+              <label className="text-gray-700 dark:text-gray-300 text-sm">
+                Delivery Date:
+              </label>
+              <input
+                type="date"
+                value={deliveryDateFilter}
+                onChange={(e) => setDeliveryDateFilter(e.target.value)}
+                className="p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+          }
+        />
+
+        {/* EntityDetails for Orders */}
+        {selectedOrder && (
+          <div className="flex-1 bg-white dark:bg-gray-900 rounded shadow p-4 overflow-auto">
+            <h2 className="text-xl font-bold mb-4">Order Details</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label>Customer Name</label>
+                <input
+                  name="customerName"
+                  value={formValues.customerName || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label>Customer Address</label>
+                <input
+                  name="customerAddress"
+                  value={formValues.customerAddress || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label>Delivery Address</label>
+                <input
+                  name="deliveryAddress"
+                  value={formValues.deliveryAddress || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label>Placed Date</label>
+                <input
+                  type="date"
+                  name="placedDate"
+                  value={formValues.placedDate || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label>Delivery Date</label>
+                <input
+                  type="date"
+                  name="deliveryDate"
+                  value={formValues.deliveryDate || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label>Status</label>
+                <select
+                  name="status"
+                  value={formValues.status || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                >
+                  <option>Pending</option>
+                  <option>Processing</option>
+                  <option>Delivered</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+              <div>
+                <label>Delivery Price</label>
+                <input
+                  type="number"
+                  name="deliveryPrice"
+                  value={formValues.deliveryPrice || 0}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label>Remarks</label>
+                <input
+                  name="remarks"
+                  value={formValues.remarks || ""}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            </div>
+            <div className="mt-6">
+              <h3 className="font-semibold mb-2">Items</h3>
+              {(formValues.items || []).map((item, idx) => (
+                <div key={idx} className="flex gap-2 mb-2 items-center">
+                  <input
+                    placeholder="Code"
+                    value={item.code}
+                    onChange={e => handleItemChange(idx, "code", e.target.value)}
+                    className="p-2 border rounded w-20"
+                  />
+                  <input
+                    placeholder="Name"
+                    value={item.name}
+                    onChange={e => handleItemChange(idx, "name", e.target.value)}
+                    className="p-2 border rounded w-32"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Price"
+                    value={item.price}
+                    onChange={e => handleItemChange(idx, "price", e.target.value)}
+                    className="p-2 border rounded w-20"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Qty"
+                    value={item.quantity}
+                    onChange={e => handleItemChange(idx, "quantity", e.target.value)}
+                    className="p-2 border rounded w-16"
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={e => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = ev => {
+                          handleItemChange(idx, "image", ev.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className="w-32"
+                  />
+                  {item.image && (
+                    <img src={item.image} alt="item" className="w-10 h-10 object-cover rounded" />
+                  )}
+                  <button
+                    onClick={() => handleRemoveItem(idx)}
+                    className="text-red-500 font-bold"
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={handleAddItem}
+                className="mt-2 px-4 py-1 bg-purple-600 text-white rounded"
+              >
+                Add Item
+              </button>
+            </div>
+            <div className="mt-4 font-bold">
+              Total: {calculateTotal()}
+            </div>
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={handleSave}
+                className="px-4 py-2 bg-green-600 text-white rounded"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => handleDelete(formValues.id)}
+                className="px-4 py-2 bg-red-600 text-white rounded"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </PageLayout>
+  );
 }
 
-export default Orders
+export default Orders;
