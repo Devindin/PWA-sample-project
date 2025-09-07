@@ -2,39 +2,63 @@ import Image from "../assets/LoginImage.jpg";
 import LoginHeadings from "../Components/LoginHeadings";
 import LoginSecondaryHeadding from "../Components/LoginSecondaryHeadding";
 import InputField from "../Components/InputField";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import PrimaryButton from "../Components/PrimaryButton";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
+import { motion } from "framer-motion"; // 👈 Import Framer Motion
 
 function Login() {
   const navigate = useNavigate();
 
+  // Motion variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div className="grid lg:grid-cols-2 p-8 sm:p-10 lg:p-12 ">
-      <div >
-         <div className="relative w-full lg:min-h-[85vh]  sm:h-[267px] h-[144px]  min-[200px]:max-[320px]:h-[180px] min-[321px]:max-[376px]:h-[160px] ">
+    <motion.div
+      className="grid lg:grid-cols-2 p-8 sm:p-10 lg:p-12"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      {/* Left Image */}
+      <motion.div
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="relative w-full lg:min-h-[85vh] sm:h-[267px] h-[144px] min-[200px]:max-[320px]:h-[180px] min-[321px]:max-[376px]:h-[160px]">
           <img
             src={Image}
             alt="Login"
-            className="w-full h-full object-cover rounded-[24px] "
+            className="w-full h-full object-cover rounded-[24px]"
           />
-
-          <div className="absolute lg:bottom-8 bottom-0 left-1/2 transform -translate-x-1/2 translate-y-6 backdrop-blur-md bg-white/20 shadow-lg rounded-[8px] p-4  text-start w-4/5 h-6/7">
-            <h1 className="text-white_text 3xl:text-[30px] sm:text-[21px] text-[13px] font-semibold font-inter leading-[1.2]  pb-[6px] sm:pb-[11px]">
-              Streamline Your HR Operations
-            </h1>
-            <p className=" 3xl:text-[20px]  md:text-[13.5px] sm:text-[12px] text-[9px] font-inter text-white_text ">
-              Manage your workforce efficiently with our comprehensive HR
-              management platform. From employee onboarding to performance
-              tracking, we've got you covered.
-            </p>
-          </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="flex flex-col justify-between">
-        <div className="flex flex-col justify-center items-center flex-grow  ">
+      {/* Right Form */}
+      <motion.div
+        className="flex flex-col justify-between"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="flex flex-col justify-center items-center flex-grow"
+          variants={itemVariants}
+        >
           <Formik
             initialValues={{ email: "", password: "", role: "admin" }}
             onSubmit={(values) => {
@@ -43,60 +67,83 @@ function Login() {
             }}
           >
             {({ handleChange, values, errors, touched }) => (
-              <Form className="flex flex-col pt-[15px]  w-4/5  ">
-                <div className="pb-[1px] sm:pb-[2px] mt-[17px] ">  
-                  <LoginHeadings content="Welcome Back" /> 
-                </div>
-                <LoginSecondaryHeadding content="It's a fresh start—sign in to take control of your day" />
+              <Form className="flex flex-col pt-[15px] w-4/5">
+                {/* Headings */}
+                <motion.div variants={itemVariants}>
+                  <LoginHeadings content="Welcome Back" />
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <LoginSecondaryHeadding content="It's a fresh start—sign in to take control of your day" />
+                </motion.div>
 
-                <InputField
-                  label="Email"
-                  name="email"
-                  type="email"
-                  placeholder="Example@email.com"
-                  handleChange={handleChange}
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                />
+                {/* Inputs */}
+                <motion.div variants={itemVariants}>
+                  <InputField
+                    label="Email"
+                    name="email"
+                    type="email"
+                    placeholder="Example@email.com"
+                    handleChange={handleChange}
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                  />
+                </motion.div>
 
-                <InputField
-                  label="Password"
-                  name="password"
-                  type="password"
-                  placeholder="••••••••"
-                  handleChange={handleChange}
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                />
+                <motion.div variants={itemVariants}>
+                  <InputField
+                    label="Password"
+                    name="password"
+                    type="password"
+                    placeholder="••••••••"
+                    handleChange={handleChange}
+                    values={values}
+                    errors={errors}
+                    touched={touched}
+                  />
+                </motion.div>
 
-                <Link
-                  to="/login-with-email-verification"
-                  className="text-link_text  3xl:text-[22px] sm:text-[16px] text-[14px] text-right  font-roboto mb-2"
+                {/* Forgot password */}
+                <motion.div variants={itemVariants}>
+                  <Link
+                    to="/login-with-email-verification"
+                    className="text-link_text text-[14px] sm:text-[16px] 3xl:text-[22px] text-right font-roboto mb-2"
+                  >
+                    Forgot Password?
+                  </Link>
+                </motion.div>
+
+                {/* Button */}
+                <motion.div variants={itemVariants}>
+                  <PrimaryButton label="Sign In" type="submit" />
+                </motion.div>
+
+                {/* Register Link */}
+                <motion.div
+                  variants={itemVariants}
+                  className="flex items-center justify-center mt-[10px] sm:mt-[15px] lg:mt-[8px] pb-[8px] sm:pb-[16px] lg:pb-[20px] font-inter text-[13px] sm:text-[17px] 3xl:text-[22px]"
                 >
-                  Forgot Password?
-                </Link>
-
-                <PrimaryButton label="Sign In" type="submit" />
-
-                <div className="flex items-center justify-center lg:mt-[8px] sm:mt-[15px] mt-[10px] font-normal font-inter  3xl:text-[22px] sm:text-[17px] text-[13px] pb-[8px] sm:pb-[16px] lg:pb-[20px] ">
                   <h1>
-                    Don't you have an account ?{" "}
-                    <span className="text-link_text  cursor-pointer">
+                    Don’t have an account?{" "}
+                    <span className="text-link_text cursor-pointer">
                       <Link to="/register">Register</Link>
                     </span>
                   </h1>
-                </div>
+                </motion.div>
               </Form>
             )}
           </Formik>
-        </div>
-        <div className="flex justify-center mt-auto">
-   <Footer/>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+
+        {/* Footer */}
+        <motion.div
+          className="flex justify-center mt-auto"
+          variants={itemVariants}
+        >
+          <Footer />
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }
 
