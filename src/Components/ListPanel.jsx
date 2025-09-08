@@ -15,7 +15,7 @@ function ListPanel({ search, setSearch, items, onAdd, onSelect, onDelete, displa
         />
         <button
           onClick={onAdd}
-          className="ml-2 px-3 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-1"
+          className="ml-2 px-3 py-2 bg-primary_button_bg text-white rounded  flex items-center gap-1"
         >
           <FiPlus /> Add
         </button>
