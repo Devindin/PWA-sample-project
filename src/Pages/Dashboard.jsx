@@ -5,6 +5,7 @@ import { Line, Bar } from "react-chartjs-2";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaUsers, FaDollarSign, FaShoppingCart } from "react-icons/fa";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -65,41 +66,45 @@ function Dashboard() {
     <PageLayout>
       <div className="w-full h-full flex flex-col gap-3 p-2  dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         {/* Top Stats Row */}
-        <div className="flex flex-row gap-3 flex-none h-[15%]">
+        <div className="flex flex-row gap-6 h-[15%]">
           {/* Total Users */}
           <motion.div
-            className="w-1/4 bg-gradient-to-r from-purple-500 to-purple-700 dark:from-purple-700 dark:to-purple-900 backdrop-blur-lg rounded-xl shadow p-3 flex flex-col justify-center items-center text-white"
+            className="w-1/4 bg-gradient-to-br from-purple-500 to-pink-600 dark:from-purple-700 dark:to-pink-800 rounded-2xl shadow-lg p-6 flex flex-col justify-center items-center text-white hover:scale-105 transition-transform"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
           >
-            <FaUsers className="text-3xl mb-2" />
-            <h2 className="text-md font-semibold">Total Users</h2>
-            <p className="text-xl font-bold">1,245</p>
+            <FaUsers className="text-5xl mb-4 drop-shadow-lg" />
+            <h2 className="text-lg font-semibold tracking-wide">Total Users</h2>
+            <p className="text-3xl font-bold mt-1">1,245</p>
           </motion.div>
 
           {/* Revenue This Week */}
           <motion.div
-            className="w-2/4 bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-700 dark:to-indigo-900 backdrop-blur-lg rounded-xl shadow p-3 flex flex-col justify-center items-center text-white"
+            className="w-2/4 bg-gradient-to-br from-indigo-500 to-blue-600 dark:from-indigo-700 dark:to-blue-800 rounded-2xl shadow-lg p-6 flex flex-col justify-center items-center text-white hover:scale-105 transition-transform"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
           >
-            <FaDollarSign className="text-3xl mb-2" />
-            <h2 className="text-md font-semibold">Revenue This Week</h2>
-            <p className="text-xl font-bold">$12,450</p>
+            <FaDollarSign className="text-5xl mb-4 drop-shadow-lg text-yellow-300" />
+            <h2 className="text-lg font-semibold tracking-wide">
+              Revenue This Week
+            </h2>
+            <p className="text-3xl font-bold mt-1">$12,450</p>
           </motion.div>
 
           {/* Pending Orders */}
           <motion.div
-            className="w-1/4 bg-gradient-to-r from-purple-400 to-indigo-500 dark:from-purple-600 dark:to-indigo-800 backdrop-blur-lg rounded-xl shadow p-3 flex flex-col justify-center items-center text-white"
+            className="w-1/4 bg-gradient-to-br from-pink-400 to-indigo-500 dark:from-pink-600 dark:to-indigo-800 rounded-2xl shadow-lg p-6 flex flex-col justify-center items-center text-white hover:scale-105 transition-transform"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
           >
-            <FaShoppingCart className="text-3xl mb-2" />
-            <h2 className="text-md font-semibold">Pending Orders</h2>
-            <p className="text-xl font-bold">24</p>
+            <FaShoppingCart className="text-5xl mb-4 drop-shadow-lg text-green-300" />
+            <h2 className="text-lg font-semibold tracking-wide">
+              Pending Orders
+            </h2>
+            <p className="text-3xl font-bold mt-1">24</p>
           </motion.div>
         </div>
 
@@ -133,7 +138,6 @@ function Dashboard() {
             initial="hidden"
             animate="visible"
           >
-            
             <div className="h-[100%] w-full">
               <Calendar
                 onChange={setDate}
