@@ -104,7 +104,7 @@ function Dashboard() {
         </div>
 
         {/* Middle Row: Sales + Calendar */}
-        <div className="flex flex-row gap-3 flex-none h-[40%]">
+        <div className="flex flex-row gap-3 flex-none h-[45%]">
           <motion.div
             className="w-3/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3"
             variants={cardVariants}
@@ -133,8 +133,8 @@ function Dashboard() {
             initial="hidden"
             animate="visible"
           >
-            <h2 className="text-md font-semibold mb-1 text-center">Calendar</h2>
-            <div className="h-[90%] w-full">
+            
+            <div className="h-[100%] w-full">
               <Calendar
                 onChange={setDate}
                 value={date}

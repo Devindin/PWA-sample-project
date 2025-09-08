@@ -3,6 +3,15 @@ import PageLayout from "../Layout/PageLayout";
 import EntityList from "../Components/EntityList";
 import EntityDetails from "../Components/EntityDetails";
 
+import InputField from "../Components/InputField"; // <-- import your InputField
+
+const statusOptions = [
+  { value: "Pending", label: "Pending" },
+  { value: "Processing", label: "Processing" },
+  { value: "Delivered", label: "Delivered" },
+  { value: "Cancelled", label: "Cancelled" },
+];
+
 const initialOrders = [
   {
     id: "O001",
@@ -162,7 +171,6 @@ function Orders() {
   return (
     <PageLayout>
       <div className="flex gap-4 p-4 h-full">
-        {/* EntityList for Orders */}
         <EntityList
           entities={filteredOrders}
           search={search}
@@ -172,145 +180,129 @@ function Orders() {
           onDelete={handleDelete}
           extraFilter={
             <div className="flex flex-col gap-2 mb-2">
-              <label className="text-gray-700 dark:text-gray-300 text-sm">
-                Placed Date:
-              </label>
-              <input
+              <InputField
+                label="Placed Date"
+                name="placedDateFilter"
                 type="date"
-                value={placedDateFilter}
-                onChange={(e) => setPlacedDateFilter(e.target.value)}
-                className="p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                values={{ placedDateFilter }}
+                handleChange={e => setPlacedDateFilter(e.target.value)}
               />
-              <label className="text-gray-700 dark:text-gray-300 text-sm">
-                Delivery Date:
-              </label>
-              <input
+              <InputField
+                label="Delivery Date"
+                name="deliveryDateFilter"
                 type="date"
-                value={deliveryDateFilter}
-                onChange={(e) => setDeliveryDateFilter(e.target.value)}
-                className="p-2 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                values={{ deliveryDateFilter }}
+                handleChange={e => setDeliveryDateFilter(e.target.value)}
               />
             </div>
           }
         />
 
-        {/* EntityDetails for Orders */}
-        {selectedOrder && (
+         {selectedOrder && (
           <div className="flex-1 bg-white dark:bg-gray-900 rounded shadow p-4 overflow-auto">
             <h2 className="text-xl font-bold mb-4">Order Details</h2>
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label>Customer Name</label>
-                <input
-                  name="customerName"
-                  value={formValues.customerName || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label>Customer Address</label>
-                <input
-                  name="customerAddress"
-                  value={formValues.customerAddress || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label>Delivery Address</label>
-                <input
-                  name="deliveryAddress"
-                  value={formValues.deliveryAddress || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label>Placed Date</label>
-                <input
-                  type="date"
-                  name="placedDate"
-                  value={formValues.placedDate || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label>Delivery Date</label>
-                <input
-                  type="date"
-                  name="deliveryDate"
-                  value={formValues.deliveryDate || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label>Status</label>
-                <select
-                  name="status"
-                  value={formValues.status || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                >
-                  <option>Pending</option>
-                  <option>Processing</option>
-                  <option>Delivered</option>
-                  <option>Cancelled</option>
-                </select>
-              </div>
-              <div>
-                <label>Delivery Price</label>
-                <input
-                  type="number"
-                  name="deliveryPrice"
-                  value={formValues.deliveryPrice || 0}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
-              <div>
-                <label>Remarks</label>
-                <input
-                  name="remarks"
-                  value={formValues.remarks || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
+              <InputField
+                label="Customer Name"
+                name="customerName"
+                type="text"
+                values={formValues}
+                handleChange={handleChange}
+                requiredfiled
+              />
+              <InputField
+                label="Customer Address"
+                name="customerAddress"
+                type="text"
+                values={formValues}
+                handleChange={handleChange}
+                requiredfiled
+              />
+              <InputField
+                label="Delivery Address"
+                name="deliveryAddress"
+                type="text"
+                values={formValues}
+                handleChange={handleChange}
+                requiredfiled
+              />
+
+               <InputField
+                label="Placed Date"
+                name="placedDate"
+                type="date"
+                values={formValues}
+                handleChange={handleChange}
+                requiredfiled
+              />
+              <InputField
+                label="Delivery Date"
+                name="deliveryDate"
+                type="date"
+                values={formValues}
+                handleChange={handleChange}
+                requiredfiled
+              />
+              <InputField
+                label="Status"
+                name="status"
+                type="select"
+                options={statusOptions}
+                values={formValues}
+                handleChange={handleChange}
+                requiredfiled
+              />
+
+               <InputField
+                label="Delivery Price"
+                name="deliveryPrice"
+                type="number"
+                values={formValues}
+                handleChange={handleChange}
+              />
+              <InputField
+                label="Remarks"
+                name="remarks"
+                type="text"
+                values={formValues}
+                handleChange={handleChange}
+              />
             </div>
             <div className="mt-6">
               <h3 className="font-semibold mb-2">Items</h3>
               {(formValues.items || []).map((item, idx) => (
                 <div key={idx} className="flex gap-2 mb-2 items-center">
-                  <input
-                    placeholder="Code"
-                    value={item.code}
-                    onChange={e => handleItemChange(idx, "code", e.target.value)}
-                    className="p-2 border rounded w-20"
+                  <InputField
+                    label="Code"
+                    name={`code${idx}`}
+                    type="text"
+                    values={{ [`code${idx}`]: item.code }}
+                    handleChange={e => handleItemChange(idx, "code", e.target.value)}
                   />
-                  <input
-                    placeholder="Name"
-                    value={item.name}
-                    onChange={e => handleItemChange(idx, "name", e.target.value)}
-                    className="p-2 border rounded w-32"
+
+                   <InputField
+                    label="Name"
+                    name={`name${idx}`}
+                    type="text"
+                    values={{ [`name${idx}`]: item.name }}
+                    handleChange={e => handleItemChange(idx, "name", e.target.value)}
                   />
-                  <input
+                  <InputField
+                    label="Price"
+                    name={`price${idx}`}
                     type="number"
-                    placeholder="Price"
-                    value={item.price}
-                    onChange={e => handleItemChange(idx, "price", e.target.value)}
-                    className="p-2 border rounded w-20"
+                    values={{ [`price${idx}`]: item.price }}
+                    handleChange={e => handleItemChange(idx, "price", e.target.value)}
                   />
-                  <input
+                  <InputField
+                    label="Qty"
+                    name={`quantity${idx}`}
                     type="number"
-                    placeholder="Qty"
-                    value={item.quantity}
-                    onChange={e => handleItemChange(idx, "quantity", e.target.value)}
-                    className="p-2 border rounded w-16"
+                    values={{ [`quantity${idx}`]: item.quantity }}
+                    handleChange={e => handleItemChange(idx, "quantity", e.target.value)}
                   />
-                  <input
+
+                   <input
                     type="file"
                     accept="image/*"
                     onChange={e => {
@@ -336,7 +328,8 @@ function Orders() {
                   </button>
                 </div>
               ))}
-              <button
+
+               <button
                 onClick={handleAddItem}
                 className="mt-2 px-4 py-1 bg-purple-600 text-white rounded"
               >

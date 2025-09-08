@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import Select from "react-select";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { MdLockOutline } from "react-icons/md";
@@ -27,7 +27,7 @@ function InputField({
       <div className="flex justify-between items-center">
         <label
           htmlFor={name}
-          className="text-input_label text-[11px] md:text-[15px] 3xl:text-[28px]"
+          className="text-input_label text-[11px] md:text-[15px] 3xl:text-[28px] text-gray-900 dark:text-gray-100"
         >
           {label} {requiredfiled && <span className="text-star_mark_color">*</span>}
         </label>
@@ -35,7 +35,9 @@ function InputField({
 
       <div
         className={`relative border rounded-md transition-colors flex items-center ${
-          disabled ? "border-input_field_border text-input_field_placeholder cursor-not-allowed" : "border-input_field_border"
+          disabled
+            ? "border-gray-300 dark:border-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed bg-gray-100 dark:bg-gray-800"
+            : "border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900"
         }`}
       >
         {isDropdown ? (
@@ -48,17 +50,28 @@ function InputField({
               handleChange({ target: { name, value: selected?.value || "" } })
             }
             placeholder={placeholder || "Select"}
-            classNames={{ control: () => "h-[52px] text-[14px] 3xl:text-[30px]" }}
+            classNames={{
+              control: () =>
+                `h-[52px] text-[14px] 3xl:text-[30px] bg-transparent border-none dark:text-gray-100`,
+              menu: () => "bg-white dark:bg-gray-800",
+              menuList: () => "bg-white dark:bg-gray-800",
+              singleValue: () => "text-gray-900 dark:text-gray-100",
+            }}
             styles={{
               menu: (provided) => ({ ...provided, maxHeight: "unset", overflowY: "unset" }),
               menuList: (provided) => ({ ...provided, maxHeight: 150, overflowY: "auto" }),
-              control: (provided) => ({ ...provided, border: "none", boxShadow: "none", backgroundColor: "transparent" }),
+              control: (provided) => ({
+                ...provided,
+                border: "none",
+                boxShadow: "none",
+                backgroundColor: "transparent",
+              }),
             }}
           />
         ) : (
           <>
             {showLockIcon && (
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
                 <MdLockOutline size={16} />
               </span>
             )}
@@ -70,7 +83,9 @@ function InputField({
                 value={value}
                 onChange={handleChange}
                 disabled={disabled}
-                className={`w-full h-[80px] p-2 bg-transparent outline-none ${showLockIcon ? "pl-10" : ""}`}
+                className={`w-full h-[80px] p-2 outline-none ${
+                  showLockIcon ? "pl-10" : ""
+                } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-transparent`}
               />
             ) : (
               <input
@@ -80,14 +95,16 @@ function InputField({
                 value={value}
                 onChange={handleChange}
                 disabled={disabled}
-                className={`w-full h-[43px] 3xl:h-[52px] p-2 bg-transparent outline-none ${showLockIcon ? "pl-10" : ""}`}
+                className={`w-full h-[43px] 3xl:h-[52px] p-2 outline-none ${
+                  showLockIcon ? "pl-10" : ""
+                } text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 bg-transparent`}
               />
             )}
 
             {isPasswordField && !disabled && (
               <span
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600 text-[16px]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600 dark:text-gray-300 text-[16px]"
               >
                 {showPassword ? <IoMdEye size={20} /> : <IoMdEyeOff size={20} />}
               </span>
