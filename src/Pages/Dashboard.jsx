@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import PageLayout from "../Layout/PageLayout";
 import { motion } from "framer-motion";
-import { Line, Bar } from "react-chartjs-2";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaUsers, FaDollarSign, FaShoppingCart } from "react-icons/fa";
+import ModernCalendar from "../Components/ModernCalendar";
 
+import OrdersAreaChart from "../Components/OrdersAreaChart"; // import your area chart
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
   BarElement,
   Title,
   Tooltip,
@@ -21,27 +21,11 @@ import {
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
   BarElement,
   Title,
   Tooltip,
   Legend
 );
-
-const lineChartData = {
-  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-  datasets: [
-    {
-      label: "Sales",
-      data: [120, 200, 150, 220, 180, 250, 300],
-      fill: false,
-      backgroundColor: "#7F3DFF",
-      borderColor: "#7F3DFF",
-      tension: 0.4,
-    },
-  ],
-};
 
 const barChartData = {
   labels: ["Product A", "Product B", "Product C", "Product D"],
@@ -49,7 +33,14 @@ const barChartData = {
     {
       label: "Orders",
       data: [12, 19, 7, 15],
-      backgroundColor: "#A78BFA",
+      backgroundColor: [
+        "#A78BFA", // purple
+        "#F472B6", // pink
+        "#C084FC", // lighter purple
+        "#F9A8D4", // light pink
+      ],
+      borderRadius: 6, // rounded bars
+      barPercentage: 0.6, // slim bars
     },
   ],
 };
@@ -64,7 +55,7 @@ function Dashboard() {
 
   return (
     <PageLayout>
-      <div className="w-full h-full flex flex-col gap-3 p-2  dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="w-full h-full flex flex-col gap-3 p-2 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         {/* Top Stats Row */}
         <div className="flex flex-row gap-6 h-[15%]">
           {/* Total Users */}
@@ -108,7 +99,7 @@ function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Middle Row: Sales + Calendar */}
+        {/* Middle Row: Orders Area Chart + Calendar */}
         <div className="flex flex-row gap-3 flex-none h-[45%]">
           <motion.div
             className="w-3/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3"
@@ -116,19 +107,9 @@ function Dashboard() {
             initial="hidden"
             animate="visible"
           >
-            <h2 className="text-md font-semibold mb-2">Weekly Sales</h2>
+            <h2 className="text-md font-semibold mb-2">Weekly Orders</h2>
             <div className="h-full">
-              <Line
-                data={lineChartData}
-                options={{
-                  maintainAspectRatio: false,
-                  plugins: { legend: { labels: { color: "#fff" } } },
-                  scales: {
-                    x: { ticks: { color: "#fff" } },
-                    y: { ticks: { color: "#fff" } },
-                  },
-                }}
-              />
+              <OrdersAreaChart />
             </div>
           </motion.div>
 
@@ -139,11 +120,7 @@ function Dashboard() {
             animate="visible"
           >
             <div className="h-[100%] w-full">
-              <Calendar
-                onChange={setDate}
-                value={date}
-                className="h-full w-full text-sm dark:bg-gray-700 dark:text-gray-100"
-              />
+              <ModernCalendar date={date} setDate={setDate} />
             </div>
           </motion.div>
         </div>
@@ -157,15 +134,34 @@ function Dashboard() {
             animate="visible"
           >
             <h2 className="text-md font-semibold mb-2">Orders Overview</h2>
-            <div className="h-full">
+            <div className="h-90%">
               <Bar
                 data={barChartData}
                 options={{
                   maintainAspectRatio: false,
-                  plugins: { legend: { labels: { color: "#fff" } } },
+                  plugins: {
+                    legend: {
+                      labels: {
+                        color: "#fff", // legend text color
+                        font: { weight: "500" },
+                      },
+                    },
+                    tooltip: {
+                      backgroundColor: "#1F2937", // dark tooltip
+                      titleColor: "#fff",
+                      bodyColor: "#fff",
+                      borderRadius: 8,
+                    },
+                  },
                   scales: {
-                    x: { ticks: { color: "#fff" } },
-                    y: { ticks: { color: "#fff" } },
+                    x: {
+                      ticks: { color: "#374151" }, // dark gray x-axis
+                      grid: { display: false },
+                    },
+                    y: {
+                      ticks: { color: "#374151" }, // dark gray y-axis
+                      grid: { color: "#E5E7EB" },
+                    },
                   },
                 }}
               />

@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* ModernCalendar.css */
+.react-calendar {
+  width: 100% !important;
+  border: none;
+  background: transparent;
+  font-family: 'Roboto', sans-serif;
+  color: #111827; /* dark mode handled via tailwind classes */
+}
+
+.react-calendar__navigation button {
+  color: #7F3DFF;
+  font-weight: bold;
+  background: none;
+  border: none;
+  min-width: 44px;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #E0E7FF;
+  border-radius: 8px;
+}
+
+.react-calendar__tile {
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.react-calendar__tile--now {
+  background: #7F3DFF33;
+  color: #7F3DFF;
+  font-weight: bold;
+}
+
+.react-calendar__tile--active {
+  background: #7F3DFF;
+  color: white;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: #D8B4FE33;
+}
