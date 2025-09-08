@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PageLayout from "../Layout/PageLayout";
 import EntityList from "../Components/EntityList";
 import EntityDetails from "../Components/EntityDetails";
-
-import InputField from "../Components/InputField"; // <-- import your InputField
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import InputField from "../Components/InputField"; 
 
 const statusOptions = [
   { value: "Pending", label: "Pending" },
@@ -64,7 +64,8 @@ const initialOrders = [
   },
 ];
 
-function Orders() {
+function Orders({ onSave,
+  onDelete,}) {
   const [orders, setOrders] = useState(initialOrders);
   const [search, setSearch] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -128,7 +129,7 @@ function Orders() {
   // Calculate total
   const calculateTotal = () => {
     const itemsTotal = (formValues.items || []).reduce(
-      (sum, item) => sum + (Number(item.price) * Number(item.quantity)),
+      (sum, item) => sum + Number(item.price) * Number(item.quantity),
       0
     );
     return itemsTotal + Number(formValues.deliveryPrice || 0);
@@ -185,20 +186,25 @@ function Orders() {
                 name="placedDateFilter"
                 type="date"
                 values={{ placedDateFilter }}
-                handleChange={e => setPlacedDateFilter(e.target.value)}
+                handleChange={(e) => setPlacedDateFilter(e.target.value)}
               />
               <InputField
                 label="Delivery Date"
                 name="deliveryDateFilter"
                 type="date"
                 values={{ deliveryDateFilter }}
-                handleChange={e => setDeliveryDateFilter(e.target.value)}
+                handleChange={(e) => setDeliveryDateFilter(e.target.value)}
               />
             </div>
           }
         />
 
-         {selectedOrder && (
+         {!selectedOrder ? (
+      // Empty state
+      <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400 bg-white w-full rounded-xl">
+        <p>Select an order to see details</p>
+      </div>
+    ) : (
           <div className="flex-1 bg-white dark:bg-gray-900 rounded shadow p-4 overflow-auto">
             <h2 className="text-xl font-bold mb-4">Order Details</h2>
             <div className="grid grid-cols-2 gap-4">
@@ -227,7 +233,7 @@ function Orders() {
                 requiredfiled
               />
 
-               <InputField
+              <InputField
                 label="Placed Date"
                 name="placedDate"
                 type="date"
@@ -253,7 +259,7 @@ function Orders() {
                 requiredfiled
               />
 
-               <InputField
+              <InputField
                 label="Delivery Price"
                 name="deliveryPrice"
                 type="number"
@@ -277,39 +283,47 @@ function Orders() {
                     name={`code${idx}`}
                     type="text"
                     values={{ [`code${idx}`]: item.code }}
-                    handleChange={e => handleItemChange(idx, "code", e.target.value)}
+                    handleChange={(e) =>
+                      handleItemChange(idx, "code", e.target.value)
+                    }
                   />
 
-                   <InputField
+                  <InputField
                     label="Name"
                     name={`name${idx}`}
                     type="text"
                     values={{ [`name${idx}`]: item.name }}
-                    handleChange={e => handleItemChange(idx, "name", e.target.value)}
+                    handleChange={(e) =>
+                      handleItemChange(idx, "name", e.target.value)
+                    }
                   />
                   <InputField
                     label="Price"
                     name={`price${idx}`}
                     type="number"
                     values={{ [`price${idx}`]: item.price }}
-                    handleChange={e => handleItemChange(idx, "price", e.target.value)}
+                    handleChange={(e) =>
+                      handleItemChange(idx, "price", e.target.value)
+                    }
                   />
                   <InputField
                     label="Qty"
                     name={`quantity${idx}`}
                     type="number"
                     values={{ [`quantity${idx}`]: item.quantity }}
-                    handleChange={e => handleItemChange(idx, "quantity", e.target.value)}
+                    handleChange={(e) =>
+                      handleItemChange(idx, "quantity", e.target.value)
+                    }
                   />
 
-                   <input
+                  <input
                     type="file"
                     accept="image/*"
-                    onChange={e => {
+                    onChange={(e) => {
                       const file = e.target.files[0];
                       if (file) {
                         const reader = new FileReader();
-                        reader.onload = ev => {
+                        reader.onload = (ev) => {
                           handleItemChange(idx, "image", ev.target.result);
                         };
                         reader.readAsDataURL(file);
@@ -318,7 +332,11 @@ function Orders() {
                     className="w-32"
                   />
                   {item.image && (
-                    <img src={item.image} alt="item" className="w-10 h-10 object-cover rounded" />
+                    <img
+                      src={item.image}
+                      alt="item"
+                      className="w-10 h-10 object-cover rounded"
+                    />
                   )}
                   <button
                     onClick={() => handleRemoveItem(idx)}
@@ -329,27 +347,30 @@ function Orders() {
                 </div>
               ))}
 
-               <button
+              <button
                 onClick={handleAddItem}
                 className="mt-2 px-4 py-1 bg-purple-600 text-white rounded"
               >
                 Add Item
               </button>
             </div>
-            <div className="mt-4 font-bold">
-              Total: {calculateTotal()}
-            </div>
-            <div className="flex gap-2 mt-4">
+            <div className="mt-4 font-bold">Total: {calculateTotal()}</div>
+            <div className="mt-6 flex gap-4 justify-end">
+              {/* Save Button */}
               <button
-                onClick={handleSave}
-                className="px-4 py-2 bg-green-600 text-white rounded"
+                onClick={onSave}
+                className="px-5 py-2.5 flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md hover:from-blue-600 hover:to-blue-700 active:scale-95 transition-all duration-200"
               >
+                <FiEdit className="text-lg" />
                 Save
               </button>
+
+              {/* Delete Button */}
               <button
-                onClick={() => handleDelete(formValues.id)}
-                className="px-4 py-2 bg-red-600 text-white rounded"
+                onClick={() => onDelete(formValues.id)}
+                className="px-5 py-2.5 flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md hover:from-red-600 hover:to-red-700 active:scale-95 transition-all duration-200"
               >
+                <FiTrash2 className="text-lg" />
                 Delete
               </button>
             </div>

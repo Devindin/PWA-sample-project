@@ -1,7 +1,15 @@
 import React from "react";
 import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 
-function ListPanel({ search, setSearch, items, onAdd, onSelect, onDelete, displayKey }) {
+function ListPanel({
+  search,
+  setSearch,
+  items,
+  onAdd,
+  onSelect,
+  onDelete,
+  displayKey,
+}) {
   return (
     <div className="w-1/3 bg-white/30 dark:bg-gray-800/60 backdrop-blur-lg rounded-xl shadow p-4 flex flex-col">
       {/* Search & Add */}
@@ -31,20 +39,31 @@ function ListPanel({ search, setSearch, items, onAdd, onSelect, onDelete, displa
           >
             <div>
               <p className="font-semibold">{item.name}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{item.id}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {item.id}
+              </p>
             </div>
+
+            {/* Modern Action Buttons */}
             <div className="flex gap-2">
+              {/* Edit */}
               <button
                 onClick={() => onSelect(item)}
-                className="p-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+                className="px-3 py-2 flex items-center gap-1 rounded-lg border border-yellow-400 
+                     text-yellow-500 hover:bg-yellow-100/30 dark:hover:bg-yellow-400/20 
+                     transition-all duration-200 active:scale-95"
               >
-                <FiEdit />
+                <FiEdit className="text-lg" />
               </button>
+
+              {/* Delete */}
               <button
                 onClick={() => onDelete(item.id)}
-                className="p-1 bg-red-500 hover:bg-red-600 text-white rounded"
+                className="px-3 py-2 flex items-center gap-1 rounded-lg border border-red-400 
+                     text-red-500 hover:bg-red-100/30 dark:hover:bg-red-400/20 
+                     transition-all duration-200 active:scale-95"
               >
-                <FiTrash2 />
+                <FiTrash2 className="text-lg" />
               </button>
             </div>
           </li>

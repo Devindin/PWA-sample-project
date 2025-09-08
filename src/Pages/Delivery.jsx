@@ -33,7 +33,7 @@ function Delivery() {
   const [formValues, setFormValues] = useState({});
   const [filterDate, setFilterDate] = useState("");
 
-  // 🔍 Filter by search + date
+  //  Filter by search + date
   const filteredDeliveries = deliveries.filter((d) => {
     const matchesSearch =
       d.customer.toLowerCase().includes(search.toLowerCase()) ||
@@ -48,13 +48,13 @@ function Delivery() {
     return matchesSearch && matchesDate;
   });
 
-  // 📌 Handle input changes
+  //Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // ➕ Add new delivery
+  // Add new delivery
   const handleAdd = () => {
     const newDelivery = {
       id: `D${(deliveries.length + 1).toString().padStart(3, "0")}`,
@@ -71,7 +71,7 @@ function Delivery() {
     setFormValues(newDelivery);
   };
 
-  // 💾 Save changes
+  //  Save changes
   const handleSave = () => {
     setDeliveries(
       deliveries.map((d) => (d.id === formValues.id ? formValues : d))
@@ -79,7 +79,7 @@ function Delivery() {
     alert("Delivery updated!");
   };
 
-  // 🗑️ Delete
+  // Delete
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this delivery?")) {
       setDeliveries(deliveries.filter((d) => d.id !== id));
@@ -90,44 +90,39 @@ function Delivery() {
   return (
     <PageLayout>
       <div className="flex gap-4 p-4 h-full">
-       
-         
-
-          <ListPanel
-            search={search}
-            setSearch={setSearch}
-            items={filteredDeliveries}
-            onAdd={handleAdd}
-            onSelect={(d) => {
-              setSelectedDelivery(d);
-              setFormValues(d);
-            }}
-            onDelete={handleDelete}
-            displayKey="Delivery"
-          />
-      
+        <ListPanel
+          search={search}
+          setSearch={setSearch}
+          items={filteredDeliveries}
+          onAdd={handleAdd}
+          onSelect={(d) => {
+            setSelectedDelivery(d);
+            setFormValues(d);
+          }}
+          onDelete={handleDelete}
+          displayKey="Delivery"
+        />
 
         {/* Right: delivery details */}
-       
-          <DetailsPanel
-            selected={selectedDelivery}
-            formValues={formValues}
-            handleChange={handleChange}
-            onSave={handleSave}
-            onDelete={handleDelete}
-            fields={[
-              "id",
-              "orderId",
-              "customer",
-              "assignedTo",
-              "pickupDate",
-              "deliveryDate",
-              "status",
-              "remarks",
-            ]}
-            title="Delivery"
-          />
-     
+
+        <DetailsPanel
+          selected={selectedDelivery}
+          formValues={formValues}
+          handleChange={handleChange}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          fields={[
+            "id",
+            "orderId",
+            "customer",
+            "assignedTo",
+            "pickupDate",
+            "deliveryDate",
+            "status",
+            "remarks",
+          ]}
+          title="Delivery"
+        />
       </div>
     </PageLayout>
   );

@@ -44,20 +44,27 @@ function EntityList({ entities, search, setSearch, onAdd, onSelect, onDelete }) 
                 </p>
               </div>
             </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => onSelect(item)}
-                className="p-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
-              >
-                <FiEdit />
-              </button>
-              <button
-                onClick={() => onDelete(item.id)}
-                className="p-1 bg-red-500 hover:bg-red-600 text-white rounded"
-              >
-                <FiTrash2 />
-              </button>
-            </div>
+              <div className="flex gap-2">
+                          {/* Edit */}
+                          <button
+                            onClick={() => onSelect(item)}
+                            className="px-3 py-2 flex items-center gap-1 rounded-lg border border-yellow-400 
+                                 text-yellow-500 hover:bg-yellow-100/30 dark:hover:bg-yellow-400/20 
+                                 transition-all duration-200 active:scale-95"
+                          >
+                            <FiEdit className="text-lg" />
+                          </button>
+            
+                          {/* Delete */}
+                          <button
+                            onClick={() => onDelete(item.id)}
+                            className="px-3 py-2 flex items-center gap-1 rounded-lg border border-red-400 
+                                 text-red-500 hover:bg-red-100/30 dark:hover:bg-red-400/20 
+                                 transition-all duration-200 active:scale-95"
+                          >
+                            <FiTrash2 className="text-lg" />
+                          </button>
+                        </div>
           </li>
         ))}
       </ul>
