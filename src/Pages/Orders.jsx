@@ -201,7 +201,7 @@ function Orders({ onSave,
 
          {!selectedOrder ? (
       // Empty state
-      <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400 bg-white w-full rounded-xl">
+      <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400 bg-white w-2/3 rounded-xl">
         <p>Select an order to see details</p>
       </div>
     ) : (
