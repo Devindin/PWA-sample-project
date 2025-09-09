@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import PageLayout from "../Layout/PageLayout";
 import { motion } from "framer-motion";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { FaUsers, FaDollarSign, FaShoppingCart } from "react-icons/fa";
 import ModernCalendar from "../Components/ModernCalendar";
-
-import OrdersAreaChart from "../Components/OrdersAreaChart"; // import your area chart
-import { Bar } from "react-chartjs-2";
+import { Pie, Bar } from "react-chartjs-2";
+import OrdersAreaChart from "../Components/OrdersAreaChart"; // custom area chart
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,31 +14,56 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement,
 } from "chart.js";
 
+// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement
 );
 
+// Pie chart data
+const pieData = {
+  labels: ["Online", "In-Store", "COD"],
+  datasets: [
+    {
+      data: [45, 30, 25],
+      backgroundColor: ["#06B6D4", "#6366F1", "#F59E0B"],
+      borderWidth: 0,
+    },
+  ],
+};
+
+// Bar chart data
 const barChartData = {
-  labels: ["Product A", "Product B", "Product C", "Product D"],
+  labels: [
+    "Product A",
+    "Product B",
+    "Product C",
+    "Product D",
+    "Product E",
+    "Product F",
+  ],
   datasets: [
     {
       label: "Orders",
-      data: [12, 19, 7, 15],
+      data: [12, 19, 7, 15, 22, 9],
       backgroundColor: [
-        "#A78BFA", // purple
-        "#F472B6", // pink
-        "#C084FC", // lighter purple
-        "#F9A8D4", // light pink
+        "#06B6D4", // cyan
+        "#3B82F6", // blue
+        "#0EA5E9", // sky blue
+        "#6366F1", // indigo
+        "#2563EB", // deep blue
+        "#0891B2", // teal
       ],
-      borderRadius: 6, // rounded bars
-      barPercentage: 0.6, // slim bars
+      borderRadius: 6,
+      barPercentage: 0.6,
     },
   ],
 };
@@ -114,7 +137,7 @@ function Dashboard() {
           </motion.div>
 
           <motion.div
-            className="w-1/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow  flex flex-col items-center justify-center p-2"
+            className="w-1/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow flex flex-col items-center justify-center p-2"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
@@ -127,8 +150,9 @@ function Dashboard() {
 
         {/* Bottom Row: Orders / Quick Links */}
         <div className="flex flex-row gap-3 flex-none h-[35%]">
+          {/* Bar Chart */}
           <motion.div
-            className="w-3/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3"
+            className="w-2/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
@@ -136,18 +160,20 @@ function Dashboard() {
             <h2 className="text-md font-semibold mb-2">Orders Overview</h2>
             <div className="h-90%">
               <Bar
+                id="orders-bar"
                 data={barChartData}
+                redraw
                 options={{
                   maintainAspectRatio: false,
                   plugins: {
                     legend: {
                       labels: {
-                        color: "#fff", // legend text color
+                        color: "#fff",
                         font: { weight: "500" },
                       },
                     },
                     tooltip: {
-                      backgroundColor: "#1F2937", // dark tooltip
+                      backgroundColor: "#1F2937",
                       titleColor: "#fff",
                       bodyColor: "#fff",
                       borderRadius: 8,
@@ -155,12 +181,12 @@ function Dashboard() {
                   },
                   scales: {
                     x: {
-                      ticks: { color: "#374151" }, // dark gray x-axis
+                      ticks: { color: "#374151" },
                       grid: { display: false },
                     },
                     y: {
-                      ticks: { color: "#374151" }, // dark gray y-axis
-                      grid: { color: "#E5E7EB" },
+                      ticks: { color: "#374151" },
+                      grid: { display: false },
                     },
                   },
                 }}
@@ -168,21 +194,28 @@ function Dashboard() {
             </div>
           </motion.div>
 
+          {/* Conversion Rate */}
           <motion.div
-            className="w-1/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3 flex flex-col justify-center items-center"
+            className="w-1/4 bg-gradient-to-br from-green-400 to-emerald-600 dark:from-green-600 dark:to-emerald-800
+             rounded-xl shadow-lg p-6 flex flex-col items-center justify-center text-white"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
           >
-            <h2 className="text-md font-semibold mb-2 text-center">
-              Quick Links
-            </h2>
-            <ul className="flex flex-col gap-1 text-purple-700 dark:text-purple-400 font-medium text-sm">
-              <li>New Order</li>
-              <li>Add Product</li>
-              <li>View Customers</li>
-              <li>Settings</li>
-            </ul>
+            <h2 className="text-sm font-semibold">Conversion Rate</h2>
+            <p className="text-3xl font-bold mt-1">42%</p>
+            <span className="text-sm text-green-200 mt-2">▲ 5% this week</span>
+          </motion.div>
+
+          {/* Pie Chart */}
+          <motion.div
+            className="w-1/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3 flex flex-col items-center justify-center"
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <h2 className="text-sm font-semibold mb-2">Order Types</h2>
+            <Pie id="orders-pie" data={pieData} redraw />
           </motion.div>
         </div>
       </div>
