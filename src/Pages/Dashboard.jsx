@@ -114,12 +114,12 @@ function Dashboard() {
           </motion.div>
 
           <motion.div
-            className="w-1/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow p-3 flex flex-col items-center justify-center"
+            className="w-1/4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow  flex flex-col items-center justify-center p-2"
             variants={cardVariants}
             initial="hidden"
             animate="visible"
           >
-            <div className="h-[100%] w-full">
+            <div className="h-70% w-full">
               <ModernCalendar date={date} setDate={setDate} />
             </div>
           </motion.div>

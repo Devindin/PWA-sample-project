@@ -5,11 +5,11 @@ import "../index.css";
 
 function ModernCalendar({ date, setDate }) {
   return (
-    <div className="modern-calendar p-2 rounded-xl shadow-lg backdrop-blur-lg h-full">
+    <div className="modern-calendar p-2  h-80%">
       <Calendar
         onChange={setDate}
         value={date}
-        className="w-full h-full text-sm border-none rounded-xl"
+        className="w-full h-80% text-sm border-none rounded-xl"
       />
     </div>
   );
