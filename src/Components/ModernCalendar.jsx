@@ -9,7 +9,7 @@ function ModernCalendar({ date, setDate }) {
       <Calendar
         onChange={setDate}
         value={date}
-        className="w-full h-80% text-sm border-none rounded-xl"
+        className="w-full h-80% text-sm border-none rounded-xl dark:text-white"
       />
     </div>
   );
