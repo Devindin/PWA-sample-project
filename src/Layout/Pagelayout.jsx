@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleDarkMode } from "../features/theme/themeSlice";
 import { Link } from "react-router-dom";
 import {
   FaHome,
@@ -11,17 +13,13 @@ import {
 } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { BsMoonStars, BsSun } from "react-icons/bs";
-import { motion } from "framer-motion"; 
+import { motion } from "framer-motion";
 import Profile from "../assets/profile.png";
 
 function PageLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
+  const dispatch = useDispatch();
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
@@ -35,31 +33,24 @@ function PageLayout({ children }) {
 
   return (
     <div
-      className={`flex h-screen transition-colors duration-500
-        ${
-          darkMode
-            ? "bg-gray-900"
-            : "bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50"
-        }
-      `}
+      className={`flex h-screen transition-colors duration-500 ${
+        darkMode
+          ? "bg-gray-900"
+          : "bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50"
+      }`}
     >
-      {/* Sidebar with Framer Motion */}
+      {/* Sidebar */}
       <motion.div
         animate={{ width: collapsed ? "4rem" : "15rem" }}
         transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
-        className={`flex flex-col 
-          ${
-            darkMode
-              ? "bg-gray-800/60 border-gray-700 text-gray-100"
-              : "bg-white/30 border-white/40 text-black"
-          }
-          backdrop-blur-lg shadow-lg border
-          rounded-[32px] m-4 overflow-hidden
-        `}
+        className={`flex flex-col ${
+          darkMode
+            ? "bg-gray-800/60 border-gray-700 text-gray-100"
+            : "bg-white/30 border-white/40 text-black"
+        } backdrop-blur-lg shadow-lg border rounded-[32px] m-4 overflow-hidden`}
       >
-        {/* Collapse + Dark Mode Buttons */}
+        {/* Collapse + Dark Mode */}
         <div className="flex justify-between items-center p-2">
-          {/* Collapse */}
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-2 rounded-lg bg-purple-200/50 hover:bg-purple-300/50 dark:bg-gray-700 dark:hover:bg-gray-600 transition"
@@ -71,10 +62,9 @@ function PageLayout({ children }) {
             )}
           </button>
 
-          {/* Dark Mode Toggle */}
           {!collapsed && (
             <button
-              onClick={toggleDarkMode}
+              onClick={() => dispatch(toggleDarkMode())}
               className="p-2 rounded-lg bg-purple-200/50 hover:bg-purple-300/50 dark:bg-gray-700 dark:hover:bg-gray-600 transition"
             >
               {darkMode ? (
@@ -112,12 +102,11 @@ function PageLayout({ children }) {
             <Link
               key={index}
               to={item.path}
-              className={`flex items-center gap-4 p-3 rounded-[12px] cursor-pointer font-medium transition
-                ${
-                  darkMode
-                    ? "bg-gray-700/30 hover:bg-gray-600 text-gray-200"
-                    : "bg-white/20 hover:bg-purple-200/40 text-purple-900"
-                }`}
+              className={`flex items-center gap-4 p-3 rounded-[12px] cursor-pointer font-medium transition ${
+                darkMode
+                  ? "bg-gray-700/30 hover:bg-gray-600 text-gray-200"
+                  : "bg-white/20 hover:bg-purple-200/40 text-purple-900"
+              }`}
             >
               <span className="text-lg">{item.icon}</span>
               {!collapsed && <span>{item.label}</span>}
@@ -126,7 +115,7 @@ function PageLayout({ children }) {
         </nav>
       </motion.div>
 
-      {/* Main Content */}
+      {/* Main */}
       <div className="flex-1 p-6 overflow-auto">
         {children || (
           <motion.h1
