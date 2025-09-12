@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import PageLayout from "../Layout/PageLayout";
+import React, { useState, lazy, Suspense } from "react";
+import PageLayout from "../Layout/Pagelayout";
 import { motion } from "framer-motion";
 import "react-calendar/dist/Calendar.css";
 import { FaUsers, FaDollarSign, FaShoppingCart } from "react-icons/fa";
 import ModernCalendar from "../Components/ModernCalendar";
 import { Pie, Bar } from "react-chartjs-2";
-import OrdersAreaChart from "../Components/OrdersAreaChart"; // custom area chart
+import OrdersAreaChart from "../Components/OrdersAreaChart";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -75,6 +75,13 @@ function Dashboard() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
+
+  const LazyBar = lazy(() =>
+    import("react-chartjs-2").then((mod) => ({ default: mod.Bar }))
+  );
+  const LazyPie = lazy(() =>
+    import("react-chartjs-2").then((mod) => ({ default: mod.Pie }))
+  );
 
   return (
     <PageLayout>
@@ -159,38 +166,42 @@ function Dashboard() {
           >
             <h2 className="text-md font-semibold mb-2">Orders Overview</h2>
             <div className="h-90%">
-              <Bar
-                id="orders-bar"
-                data={barChartData}
-                redraw
-                options={{
-                  maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      labels: {
-                        color: "#fff",
-                        font: { weight: "500" },
+              <Suspense
+                fallback={<p className="text-center">Loading chart...</p>}
+              >
+                <LazyBar
+                  id="orders-bar"
+                  data={barChartData}
+                  redraw
+                  options={{
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: {
+                        labels: {
+                          color: "#fff",
+                          font: { weight: "500" },
+                        },
+                      },
+                      tooltip: {
+                        backgroundColor: "#1F2937",
+                        titleColor: "#fff",
+                        bodyColor: "#fff",
+                        borderRadius: 8,
                       },
                     },
-                    tooltip: {
-                      backgroundColor: "#1F2937",
-                      titleColor: "#fff",
-                      bodyColor: "#fff",
-                      borderRadius: 8,
+                    scales: {
+                      x: {
+                        ticks: { color: "#374151" },
+                        grid: { display: false },
+                      },
+                      y: {
+                        ticks: { color: "#374151" },
+                        grid: { display: false },
+                      },
                     },
-                  },
-                  scales: {
-                    x: {
-                      ticks: { color: "#374151" },
-                      grid: { display: false },
-                    },
-                    y: {
-                      ticks: { color: "#374151" },
-                      grid: { display: false },
-                    },
-                  },
-                }}
-              />
+                  }}
+                />
+              </Suspense>
             </div>
           </motion.div>
 
@@ -215,7 +226,9 @@ function Dashboard() {
             animate="visible"
           >
             <h2 className="text-sm font-semibold mb-2">Order Types</h2>
-            <Pie id="orders-pie" data={pieData} redraw />
+            <Suspense fallback={<p>Loading chart...</p>}>
+              <LazyPie id="orders-pie" data={pieData} redraw />
+            </Suspense>
           </motion.div>
         </div>
       </div>

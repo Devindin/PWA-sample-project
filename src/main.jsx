@@ -5,7 +5,7 @@ import "./index.css";
 
 // Redux imports
 import { Provider } from "react-redux";
-import store from "./store/store.js"; // <-- make sure this path matches your project
+import store from "./store/store.js"; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
