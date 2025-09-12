@@ -4,8 +4,13 @@ import { motion } from "framer-motion";
 import "react-calendar/dist/Calendar.css";
 import { FaUsers, FaDollarSign, FaShoppingCart } from "react-icons/fa";
 import ModernCalendar from "../Components/ModernCalendar";
-import { Pie, Bar } from "react-chartjs-2";
 import OrdersAreaChart from "../Components/OrdersAreaChart";
+const LazyBar = lazy(() =>
+    import("react-chartjs-2").then((mod) => ({ default: mod.Bar }))
+  );
+  const LazyPie = lazy(() =>
+    import("react-chartjs-2").then((mod) => ({ default: mod.Pie }))
+  );
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -76,12 +81,7 @@ function Dashboard() {
     visible: { opacity: 1, y: 0 },
   };
 
-  const LazyBar = lazy(() =>
-    import("react-chartjs-2").then((mod) => ({ default: mod.Bar }))
-  );
-  const LazyPie = lazy(() =>
-    import("react-chartjs-2").then((mod) => ({ default: mod.Pie }))
-  );
+  
 
   return (
     <PageLayout>

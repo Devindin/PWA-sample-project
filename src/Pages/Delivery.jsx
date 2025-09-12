@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import PageLayout from "../Layout/PageLayout";
+import PageLayout from "../Layout/Pagelayout";
 import ListPanel from "../Components/ListPanel";
 import DetailsPanel from "../Components/DetailsPanel";
+import PageHeader from "../Components/PageHeader";
+import { FaPlus } from "react-icons/fa";
 
 const initialDeliveries = [
   {
@@ -89,7 +91,22 @@ function Delivery() {
 
   return (
     <PageLayout>
-      <div className="flex gap-4 p-4 h-full">
+        <div className="flex flex-col gap-4 h-full p-4">
+    
+        <PageHeader
+          title="Delivery"
+          subtitle={"You have customers"}
+          actions={[
+            <button
+              key="add"
+              
+              className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+            >
+              <FaPlus /> Add Customer
+            </button>,
+          ]}
+        />
+          <div className="flex gap-4 p-4 h-full">
         <ListPanel
           search={search}
           setSearch={setSearch}
@@ -123,6 +140,7 @@ function Delivery() {
           ]}
           title="Delivery"
         />
+        </div>
       </div>
     </PageLayout>
   );

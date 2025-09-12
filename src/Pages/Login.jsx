@@ -7,7 +7,7 @@ import PrimaryButton from "../Components/PrimaryButton";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 import { motion } from "framer-motion";
-import Logo from "../assets/Logo.png"
+
 
 function Login() {
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 ">
       <motion.div
-        className="grid lg:grid-cols-2 w-full max-w-6xl rounded-[32px] shadow-2xl overflow-hidden bg-white/40 dark:bg-gray-800/60 backdrop-blur-lg"
+        className="grid lg:grid-cols-2 w-full max-w-6xl rounded-[32px] shadow-2xl overflow-hidden bg-white/40 dark:bg-gray-800/60 backdrop-blur-lg "
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
