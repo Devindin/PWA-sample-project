@@ -16,7 +16,7 @@ function DetailsPanel({
       {!selected ? (
         // Empty state → still inside white card
         <div className="flex flex-1 items-center justify-center">
-          <p className="text-gray-500 dark:text-gray-400 text-lg">
+          <p className="text-gray-500 dark:text-white text-lg">
             Select a {title.toLowerCase()} to see details
           </p>
         </div>

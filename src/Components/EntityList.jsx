@@ -1,7 +1,14 @@
 import React from "react";
 import { FiEdit, FiTrash2, FiPlus } from "react-icons/fi";
 
-function EntityList({ entities, search, setSearch, onAdd, onSelect, onDelete }) {
+function EntityList({
+  entities,
+  search,
+  setSearch,
+  onAdd,
+  onSelect,
+  onDelete,
+}) {
   return (
     <div className="w-1/3 bg-white/30 dark:bg-gray-800/60 backdrop-blur-lg rounded-xl shadow p-4 flex flex-col">
       {/* Search + Add */}
@@ -34,37 +41,39 @@ function EntityList({ entities, search, setSearch, onAdd, onSelect, onDelete }) 
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-10 h-10 rounded object-cover"
+                  className="w-10 h-10 rounded object-cover  text-black dark:text-white"
                 />
               )}
               <div>
-                <p className="font-semibold">{item.name}</p>
+                <p className="font-semibold  text-black dark:text-white">
+                  {item.name}
+                </p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {item.id}
                 </p>
               </div>
             </div>
-              <div className="flex gap-2">
-                          {/* Edit */}
-                          <button
-                            onClick={() => onSelect(item)}
-                            className="px-3 py-2 flex items-center gap-1 rounded-lg border border-yellow-400 
+            <div className="flex gap-2">
+              {/* Edit */}
+              <button
+                onClick={() => onSelect(item)}
+                className="px-3 py-2 flex items-center gap-1 rounded-lg border border-yellow-400 
                                  text-yellow-500 hover:bg-yellow-100/30 dark:hover:bg-yellow-400/20 
                                  transition-all duration-200 active:scale-95"
-                          >
-                            <FiEdit className="text-lg" />
-                          </button>
-            
-                          {/* Delete */}
-                          <button
-                            onClick={() => onDelete(item.id)}
-                            className="px-3 py-2 flex items-center gap-1 rounded-lg border border-red-400 
+              >
+                <FiEdit className="text-sm" />
+              </button>
+
+              {/* Delete */}
+              <button
+                onClick={() => onDelete(item.id)}
+                className="px-3 py-2 flex items-center gap-1 rounded-lg border border-red-400 
                                  text-red-500 hover:bg-red-100/30 dark:hover:bg-red-400/20 
                                  transition-all duration-200 active:scale-95"
-                          >
-                            <FiTrash2 className="text-lg" />
-                          </button>
-                        </div>
+              >
+                <FiTrash2 className="text-sm" />
+              </button>
+            </div>
           </li>
         ))}
       </ul>

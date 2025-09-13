@@ -38,7 +38,7 @@ function ListPanel({
             className="p-2 cursor-pointer hover:bg-purple-500/20 dark:hover:bg-purple-400/30 rounded mb-1 transition-colors flex justify-between items-center"
           >
             <div>
-              <p className="font-semibold">{item.name}</p>
+              <p className="font-semibold text-black dark:text-white">{item.name}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {item.id}
               </p>
@@ -53,7 +53,7 @@ function ListPanel({
                      text-yellow-500 hover:bg-yellow-100/30 dark:hover:bg-yellow-400/20 
                      transition-all duration-200 active:scale-95"
               >
-                <FiEdit className="text-lg" />
+                <FiEdit className="text-sm" />
               </button>
 
               {/* Delete */}
@@ -63,7 +63,7 @@ function ListPanel({
                      text-red-500 hover:bg-red-100/30 dark:hover:bg-red-400/20 
                      transition-all duration-200 active:scale-95"
               >
-                <FiTrash2 className="text-lg" />
+                <FiTrash2 className="text-sm" />
               </button>
             </div>
           </li>
