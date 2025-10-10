@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PageLayout from "../Layout/Pagelayout";
+import PageLayout from "../Layout/PageLayout";
 import ListPanel from "../Components/ListPanel";
 import DetailsPanel from "../Components/DetailsPanel";
 import PageHeader from "../Components/PageHeader"; 
