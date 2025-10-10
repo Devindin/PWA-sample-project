@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense } from "react";
-import PageLayout from "../Layout/Pagelayout";
+import PageLayout from "../Layout/PageLayout";
 import { motion } from "framer-motion";
 import "react-calendar/dist/Calendar.css";
 import { FaUsers, FaDollarSign, FaShoppingCart } from "react-icons/fa";

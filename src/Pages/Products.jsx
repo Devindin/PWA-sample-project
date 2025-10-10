@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import PageLayout from "../Layout/PageLayout";
 import EntityList from "../Components/EntityList";
 import EntityDetails from "../Components/EntityDetails";
+import PageHeader from "../Components/PageHeader";
+import { FaPlus } from "react-icons/fa";
 
 const initialProducts = [
   {
@@ -89,24 +91,40 @@ function Products() {
 
   return (
     <PageLayout>
-      <div className="flex gap-4 p-4 h-full">
-        <EntityList
-          entities={filteredProducts}
-          search={search}
-          setSearch={setSearch}
-          onAdd={handleAdd}
-          onSelect={handleSelect}
-          onDelete={handleDelete}
+      <div className="flex flex-col gap-4 h-full p-4">
+        {/* Page Header */}
+        <PageHeader
+          title="Products"
+          actions={[
+            <button
+              key="add"
+              onClick={handleAdd}
+              className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+            >
+              <FaPlus /> Add Products
+            </button>,
+          ]}
         />
-        <EntityDetails
-          entity={selectedProduct}
-          formValues={formValues}
-          setFormValues={setFormValues}
-          onChange={handleChange}
-          onSave={handleSave}
-          onDelete={handleDelete}
-          onImageUpload={handleImageUpload}
-        />
+        {/* Main Content */}
+        <div className="flex gap-4 h-full">
+          <EntityList
+            entities={filteredProducts}
+            search={search}
+            setSearch={setSearch}
+            onAdd={handleAdd}
+            onSelect={handleSelect}
+            onDelete={handleDelete}
+          />
+          <EntityDetails
+            entity={selectedProduct}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            onChange={handleChange}
+            onSave={handleSave}
+            onDelete={handleDelete}
+            onImageUpload={handleImageUpload}
+          />
+        </div>
       </div>
     </PageLayout>
   );
