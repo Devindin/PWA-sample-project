@@ -10,14 +10,16 @@ import {
   FaTruck,
   FaUserFriends,
   FaSignOutAlt,
+  FaBars,
 } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { BsMoonStars, BsSun } from "react-icons/bs";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Profile from "../assets/profile.png";
 
 function PageLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // for mobile toggle
   const dispatch = useDispatch();
   const darkMode = useSelector((state) => state.theme.darkMode);
 
@@ -39,11 +41,11 @@ function PageLayout({ children }) {
           : "bg-gradient-to-br from-purple-200 via-purple-100 to-purple-50"
       }`}
     >
-      {/* Sidebar */}
+      {/* 🌙 Sidebar for Desktop */}
       <motion.div
         animate={{ width: collapsed ? "4rem" : "15rem" }}
-        transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
-        className={`flex flex-col ${
+        transition={{ duration: 0.6, type: "spring", stiffness: 120 }}
+        className={`hidden md:flex flex-col ${
           darkMode
             ? "bg-gray-800/60 border-gray-700 text-gray-100"
             : "bg-white/30 border-white/40 text-black"
@@ -115,8 +117,60 @@ function PageLayout({ children }) {
         </nav>
       </motion.div>
 
-      {/* Main */}
+      {/* Mobile Hamburger */}
+      <div className="absolute top-4 left-4 md:hidden z-50">
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="p-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition"
+        >
+          <FaBars size={18} />
+        </button>
+      </div>
 
+      {/* 📱 Mobile Sidebar Overlay */}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ duration: 0.4 }}
+            className={`fixed top-0 left-0 w-64 h-full z-40 flex flex-col ${
+              darkMode ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"
+            } shadow-lg p-4`}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="font-bold text-lg text-purple-700 dark:text-white "></h2>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="text-gray-500 hover:text-purple-600 text-2xl "
+              >
+                &times;
+              </button>
+            </div>
+
+            <nav className="space-y-3">
+              {menuItems.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.path}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center gap-3 p-3 rounded-lg transition ${
+                    darkMode
+                      ? "hover:bg-gray-700"
+                      : "hover:bg-purple-100 text-purple-900"
+                  }`}
+                >
+                  <span className="text-lg">{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Content */}
       <div className="flex-1 p-4 overflow-hidden flex flex-col">
         {children || (
           <motion.h1

@@ -15,7 +15,7 @@ function DetailsPanel({
     <div className="w-2/3 bg-white dark:bg-gray-900/80 backdrop-blur-lg rounded-xl shadow p-6 flex flex-col overflow-y-auto h-full">
       {!selected ? (
         // Empty state → still inside white card
-        <div className="flex flex-1 items-center justify-center">
+        <div className="flex flex-1 items-center justify-center dark:bg-gray-900/80">
           <p className="text-gray-500 dark:text-white text-lg">
             Select a {title.toLowerCase()} to see details
           </p>
@@ -26,7 +26,7 @@ function DetailsPanel({
             {formValues.name || `New ${title}`}
           </h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 dark:bg-gray-900/80">
             {fields.map((field) => (
               <InputField
                 key={field}
