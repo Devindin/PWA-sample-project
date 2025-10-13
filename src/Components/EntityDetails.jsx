@@ -21,7 +21,7 @@ function EntityDetails({
   }
 
   return (
-    <div className="w-2/3 bg-white dark:bg-gray-900/80 backdrop-blur-lg rounded-xl shadow p-6 flex flex-col gap-4 overflow-y-auto">
+    <div className="w-2/3 bg-white dark:bg-gray-900/80 backdrop-blur-lg rounded-xl shadow p-6 flex flex-col gap-4 overflow-y-auto ">
       <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
         {entity.name || "New Item"}
       </h2>

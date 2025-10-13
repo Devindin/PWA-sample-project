@@ -28,7 +28,7 @@ function PageLayout({ children }) {
     { icon: <FaBoxOpen />, label: "Products", path: "/products" },
     { icon: <FaTruck />, label: "Delivery", path: "/delivery" },
     { icon: <FaCog />, label: "Settings", path: "/settings" },
-    { icon: <FaSignOutAlt />, label: "Sign Out", path: "/logout" },
+    { icon: <FaSignOutAlt />, label: "Sign Out"},
   ];
 
   return (

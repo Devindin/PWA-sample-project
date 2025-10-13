@@ -96,15 +96,15 @@ function Delivery() {
         <PageHeader
           title="Delivery"
           subtitle={"You have customers"}
-          actions={[
-            <button
-              key="add"
+          // actions={[
+          //   <button
+          //     key="add"
               
-              className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
-            >
-              <FaPlus /> Add Customer
-            </button>,
-          ]}
+          //     className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+          //   >
+          //     <FaPlus /> Add Customer
+          //   </button>,
+          // ]}
         />
           <div className="flex gap-4 p-4 h-full">
         <ListPanel

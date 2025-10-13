@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PageLayout from "../Layout/PageLayout";
+import PageLayout from "../Layout/Pagelayout";
 import ListPanel from "../Components/ListPanel";
 import DetailsPanel from "../Components/DetailsPanel";
 import PageHeader from "../Components/PageHeader"; 
@@ -50,20 +50,20 @@ function Customers() {
 
   return (
     <PageLayout>
-      <div className="flex flex-col gap-4 h-full p-4">
+      <div className="flex flex-col gap-4 h-screen p-4">
         {/* Page Header */}
         <PageHeader
           title="Customers"
           subtitle={`You have ${customers.length} customers`}
-          actions={[
-            <button
-              key="add"
-              onClick={handleAdd}
-              className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
-            >
-              <FaPlus /> Add Customer
-            </button>,
-          ]}
+          // actions={[
+          //   <button
+          //     key="add"
+          //     onClick={handleAdd}
+          //     className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+          //   >
+          //     <FaPlus /> Add Customer
+          //   </button>,
+          // ]}
         />
 
         {/* Main Content */}

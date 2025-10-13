@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PageLayout from "../Layout/PageLayout";
+import PageLayout from "../Layout/Pagelayout";
 import EntityList from "../Components/EntityList";
 import EntityDetails from "../Components/EntityDetails";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
@@ -175,15 +175,15 @@ function Orders({ onSave, onDelete }) {
       <div className="flex flex-col gap-4 h-full p-4">
         <PageHeader
           title="Orders"
-          actions={[
-            <button
-              key="add"
-              onClick={handleAdd}
-              className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
-            >
-              <FaPlus /> Add Order
-            </button>,
-          ]}
+          // actions={[
+          //   <button
+          //     key="add"
+          //     onClick={handleAdd}
+          //     className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+          //   >
+          //     <FaPlus /> Add Order
+          //   </button>,
+          // ]}
         />
         <div className="flex gap-4 h-full">
           <EntityList
