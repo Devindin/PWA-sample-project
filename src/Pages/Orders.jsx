@@ -220,7 +220,7 @@ function Orders({ onSave, onDelete }) {
             </div>
           ) : (
             <div className="flex-1 bg-white dark:bg-gray-900 rounded shadow p-4 overflow-auto">
-              <h2 className="text-xl font-bold mb-4">Order Details</h2>
+              <h2 className="text-xl font-bold mb-4 dark:text-white">Order Details</h2>
               <div className="grid grid-cols-2 gap-4">
                 <InputField
                   label="Customer Name"
