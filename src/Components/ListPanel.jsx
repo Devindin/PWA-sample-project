@@ -11,7 +11,7 @@ function ListPanel({
   displayKey,
 }) {
   return (
-    <div className="w-1/3 bg-white/30 dark:bg-gray-800/60 backdrop-blur-lg rounded-xl shadow p-4 flex flex-col">
+    <div className="w-1/3 bg-white/30 dark:bg-gray-800/60 backdrop-blur-lg rounded-xl shadow p-4 flex flex-col h-full">
       {/* Search & Add */}
       <div className="flex justify-between mb-4">
         <input

@@ -12,7 +12,7 @@ function DetailsPanel({
   title,
 }) {
   return (
-    <div className="w-2/3 bg-white dark:bg-gray-900/80 backdrop-blur-lg rounded-xl shadow p-6 flex flex-col overflow-y-auto">
+    <div className="w-2/3 bg-white dark:bg-gray-900/80 backdrop-blur-lg rounded-xl shadow p-6 flex flex-col overflow-y-auto h-full">
       {!selected ? (
         // Empty state → still inside white card
         <div className="flex flex-1 items-center justify-center">

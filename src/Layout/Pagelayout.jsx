@@ -28,7 +28,7 @@ function PageLayout({ children }) {
     { icon: <FaBoxOpen />, label: "Products", path: "/products" },
     { icon: <FaTruck />, label: "Delivery", path: "/delivery" },
     { icon: <FaCog />, label: "Settings", path: "/settings" },
-    { icon: <FaSignOutAlt />, label: "Sign Out"},
+    { icon: <FaSignOutAlt />, label: "Sign Out" },
   ];
 
   return (
@@ -116,7 +116,8 @@ function PageLayout({ children }) {
       </motion.div>
 
       {/* Main */}
-      <div className="flex-1 p-6 overflow-auto">
+
+      <div className="flex-1 p-4 overflow-hidden flex flex-col">
         {children || (
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

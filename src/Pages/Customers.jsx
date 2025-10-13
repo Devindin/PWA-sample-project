@@ -2,12 +2,30 @@ import React, { useState } from "react";
 import PageLayout from "../Layout/Pagelayout";
 import ListPanel from "../Components/ListPanel";
 import DetailsPanel from "../Components/DetailsPanel";
-import PageHeader from "../Components/PageHeader"; 
+import PageHeader from "../Components/PageHeader";
 import { FaPlus } from "react-icons/fa";
 
 const initialCustomers = [
-  { id: "C001", name: "John Doe", email: "john@example.com", phone: "1234567890", address: "123 Main St", delivery: "FedEx", city: "New York", zip: "10001" },
-  { id: "C002", name: "Jane Smith", email: "jane@example.com", phone: "0987654321", address: "456 Oak Ave", delivery: "UPS", city: "Los Angeles", zip: "90001" },
+  {
+    id: "C001",
+    name: "John Doe",
+    email: "john@example.com",
+    phone: "1234567890",
+    address: "123 Main St",
+    delivery: "FedEx",
+    city: "New York",
+    zip: "10001",
+  },
+  {
+    id: "C002",
+    name: "Jane Smith",
+    email: "jane@example.com",
+    phone: "0987654321",
+    address: "456 Oak Ave",
+    delivery: "UPS",
+    city: "Los Angeles",
+    zip: "90001",
+  },
 ];
 
 function Customers() {
@@ -39,7 +57,9 @@ function Customers() {
   };
 
   const handleSave = () => {
-    setCustomers(customers.map((c) => (c.id === formValues.id ? formValues : c)));
+    setCustomers(
+      customers.map((c) => (c.id === formValues.id ? formValues : c))
+    );
     alert("Customer updated!");
   };
 
@@ -50,24 +70,13 @@ function Customers() {
 
   return (
     <PageLayout>
-      <div className="flex flex-col gap-4 h-screen p-4">
-        {/* Page Header */}
+      <div className="flex flex-col gap-4 h-screen overflow-hidden p-4">
         <PageHeader
           title="Customers"
           subtitle={`You have ${customers.length} customers`}
-          // actions={[
-          //   <button
-          //     key="add"
-          //     onClick={handleAdd}
-          //     className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
-          //   >
-          //     <FaPlus /> Add Customer
-          //   </button>,
-          // ]}
         />
 
-        {/* Main Content */}
-        <div className="flex gap-4 h-full">
+        <div className="flex gap-4 flex-1 overflow-hidden">
           <ListPanel
             search={search}
             setSearch={setSearch}
@@ -83,10 +92,21 @@ function Customers() {
           <DetailsPanel
             selected={selectedCustomer}
             formValues={formValues}
-            handleChange={(e) => setFormValues({ ...formValues, [e.target.name]: e.target.value })}
+            handleChange={(e) =>
+              setFormValues({ ...formValues, [e.target.name]: e.target.value })
+            }
             onSave={handleSave}
             onDelete={handleDelete}
-            fields={["id", "name", "email", "phone", "address", "city", "zip", "delivery"]}
+            fields={[
+              "id",
+              "name",
+              "email",
+              "phone",
+              "address",
+              "city",
+              "zip",
+              "delivery",
+            ]}
             title="Customer"
           />
         </div>
