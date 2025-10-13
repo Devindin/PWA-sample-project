@@ -91,7 +91,7 @@ function Products() {
 
   return (
     <PageLayout>
-      <div className="flex flex-col gap-4 h-full p-4">
+      <div className="flex flex-col gap-4 h-screen overflow-hidden p-4">
         {/* Page Header */}
         <PageHeader
           title="Products"
