@@ -123,7 +123,7 @@ function PageLayout({ children }) {
           onClick={() => setSidebarOpen(true)}
           className="p-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition"
         >
-          <FaBars size={18} />
+          <FaBars size={16} />
         </button>
       </div>
 
