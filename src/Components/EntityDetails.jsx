@@ -14,7 +14,7 @@ function EntityDetails({
 }) {
   if (!entity) {
     return (
-      <p className="text-gray-500 dark:text-gray-400 bg-white rounded-xl items-center justify-center w-2/3 flex ">
+      <p className="text-gray-500 dark:text-gray-400 dark:bg-gray-800/60 bg-white rounded-xl items-center justify-center w-2/3 flex ">
         Select an item to see details
       </p>
     );
