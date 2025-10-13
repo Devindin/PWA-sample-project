@@ -185,7 +185,7 @@ function Orders({ onSave, onDelete }) {
           //   </button>,
           // ]}
         />
-        <div className="flex gap-4 h-full">
+        <div className="flex gap-4 flex-1 overflow-hidden">
           <EntityList
             entities={filteredOrders}
             search={search}

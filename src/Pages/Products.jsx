@@ -106,7 +106,7 @@ function Products() {
           // ]}
         />
         {/* Main Content */}
-        <div className="flex gap-4 h-full">
+         <div className="flex gap-4 flex-1 overflow-hidden">
           <EntityList
             entities={filteredProducts}
             search={search}

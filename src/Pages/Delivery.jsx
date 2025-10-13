@@ -91,55 +91,54 @@ function Delivery() {
 
   return (
     <PageLayout>
-        <div className="flex flex-col gap-4 h-full p-4">
-    
+      <div className="flex flex-col gap-4 h-full p-4">
         <PageHeader
           title="Delivery"
           subtitle={"You have customers"}
           // actions={[
           //   <button
           //     key="add"
-              
+
           //     className="flex items-center gap-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
           //   >
           //     <FaPlus /> Add Customer
           //   </button>,
           // ]}
         />
-          <div className="flex gap-4 p-4 h-full">
-        <ListPanel
-          search={search}
-          setSearch={setSearch}
-          items={filteredDeliveries}
-          onAdd={handleAdd}
-          onSelect={(d) => {
-            setSelectedDelivery(d);
-            setFormValues(d);
-          }}
-          onDelete={handleDelete}
-          displayKey="Delivery"
-        />
+        <div className="flex gap-4 flex-1 overflow-hidden">
+          <ListPanel
+            search={search}
+            setSearch={setSearch}
+            items={filteredDeliveries}
+            onAdd={handleAdd}
+            onSelect={(d) => {
+              setSelectedDelivery(d);
+              setFormValues(d);
+            }}
+            onDelete={handleDelete}
+            displayKey="Delivery"
+          />
 
-        {/* Right: delivery details */}
+          {/* Right: delivery details */}
 
-        <DetailsPanel
-          selected={selectedDelivery}
-          formValues={formValues}
-          handleChange={handleChange}
-          onSave={handleSave}
-          onDelete={handleDelete}
-          fields={[
-            "id",
-            "orderId",
-            "customer",
-            "assignedTo",
-            "pickupDate",
-            "deliveryDate",
-            "status",
-            "remarks",
-          ]}
-          title="Delivery"
-        />
+          <DetailsPanel
+            selected={selectedDelivery}
+            formValues={formValues}
+            handleChange={handleChange}
+            onSave={handleSave}
+            onDelete={handleDelete}
+            fields={[
+              "id",
+              "orderId",
+              "customer",
+              "assignedTo",
+              "pickupDate",
+              "deliveryDate",
+              "status",
+              "remarks",
+            ]}
+            title="Delivery"
+          />
         </div>
       </div>
     </PageLayout>
