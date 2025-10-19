@@ -76,7 +76,7 @@ function Customers() {
           subtitle={`You have ${customers.length} customers`}
         />
 
-        <div className="flex gap-4 flex-1 overflow-hidden">
+        <div className=" gap-4 flex-1 overflow-hidden hidden sm:flex">
           <ListPanel
             search={search}
             setSearch={setSearch}
